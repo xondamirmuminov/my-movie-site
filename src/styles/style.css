@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@fontface {
+  font-family: "Poppins", san-serif;
+  src: url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif !important;
+}
+
+:root {
+  --red: #ff0000;
+  --bg: #18191c;
+  --bg-detail: #1d1e22;
+  --white: #fff;
+  --gray: #bfbfc0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
