@@ -4,6 +4,10 @@
   src: url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 }
 
+html {
+  font-size: 10px;
+}
+
 *,
 *::before,
 *::after {
@@ -27,4 +31,17 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.container {
+  width: 100%;
+  max-width: 1220px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 8px;
+  }
 }

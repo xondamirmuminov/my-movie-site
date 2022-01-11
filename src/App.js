@@ -1,47 +1,59 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { routes } from "./routes";
+import routes from "./routes";
+import Netflix from "./assets/Netflix-Logo.wine (1).svg";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
-  const URLS = {
-    movies: {
-      path: ["/popular", "/now-playing", "/upcoming", "/top-rated"],
-      name: ["Popular", "Now Playing", "Upcoming", "Top Rated"],
-    },
-    tv: {
-      path: ["/popular", "/airing-today", "/on-tv", "/top-rated"],
-      name: ["Popular", "Airing Today", "On TV", "Top Rated"],
-    },
-    people: { path: ["/popular-people"], name: ["Popular People"] },
-  };
-
   return (
     <div className="App">
-      <Layout style={{ minHeight: "100vh" }} className="layout">
-        <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            {new Array(15).fill(null).map((_, index) => {
-              const key = index + 1;
-              return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>;
-            })}
-          </Menu>
-        </Header>
-        <Content style={{ padding: "0 50px" }}>
-          <div className="site-layout-content">Content</div>
-          <Switch>
-            {routes.map((item) => {
-              <Route exact path={item.path} component={item.component} />;
-            })}
-          </Switch>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Netflix ©2022 Created by Xondamir Mo'minov
-        </Footer>
-      </Layout>
+      <BrowserRouter>
+        <Layout style={{ minHeight: "100vh" }} className="layout">
+          <Header
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <img width={100} src={Netflix} alt="logo" />
+            <Menu
+              style={{ width: "50%", justifyContent: "flex-end" }}
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["0"]}
+            >
+              <Menu.Item key="0">
+                <Link to="/">Home</Link>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <Link to="/tv">TV Shows</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/people">People</Link>
+              </Menu.Item>
+            </Menu>
+          </Header>
+          <Content>
+            <div className="site-layout-content">
+              <Switch>
+                {routes.map((item) => (
+                  <Route
+                    exact={true}
+                    key={item.key}
+                    path={item.path}
+                    component={item.component}
+                  />
+                ))}
+              </Switch>
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>
+            Netflix ©2022 Created by Xondamir Mo'minov
+          </Footer>
+        </Layout>
+      </BrowserRouter>
     </div>
   );
 }

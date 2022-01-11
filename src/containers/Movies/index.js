@@ -1,11 +1,8 @@
 import React from "react";
+import StyledMovies from "../../styles/pages/movies";
 
 function Movies() {
-  return (
-    <>
-      <h1>Movies</h1>
-    </>
-  );
+  return <StyledMovies></StyledMovies>;
 }
 
 export default Movies;
