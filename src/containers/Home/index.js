@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Urls from "../../utils/urls";
 import StyledHome from "../../styles/pages/home";
 import { Link } from "react-router-dom";
+import Movies from "../Movies";
 
 function Home() {
   const [state, setState] = useState({
@@ -42,6 +43,7 @@ function Home() {
           </div>
         </div>
       </StyledHome>
+      <Movies />
     </>
   );
 }
