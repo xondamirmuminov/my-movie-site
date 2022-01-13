@@ -6,7 +6,7 @@ const StyledHome = styledComponents.section`
     margin: auto;
     background: linear-gradient(180deg, #9400009d, black), url(${(props) =>
       props.bg ? keys.IMG_URL + props.bg : "../../assets/home-bg.jpg"});
-    height: 50vh;
+    height: 60vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
