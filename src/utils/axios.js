@@ -11,4 +11,13 @@ export function sendQuery(url) {
     })
     .catch((err) => err);
 }
+
+export function sendQueryPost(url) {
+  return axios
+    .post(url + `?api_key=${keys.API_KEY}&language=en-US&page=1`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => err);
+}
 export default axios;

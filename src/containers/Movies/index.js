@@ -6,6 +6,7 @@ import Urls from "../../utils/urls";
 import { sendQuery } from "../../utils/axios";
 import Card from "../Card";
 import Slider from "react-slick";
+import axios from "axios";
 
 function Movies() {
   const [state, setState] = useState({
@@ -13,6 +14,8 @@ function Movies() {
     tv: [],
     day: [],
     week: [],
+    favourite: [],
+    favouriteMovie: [],
   });
   const [tabName, setTabName] = useState("ontv");
   const [trend, setTrend] = useState("day");
@@ -86,6 +89,20 @@ function Movies() {
     setState((state) => ({ ...state, week: result?.results }));
   };
 
+  const fetchFavourites = async () => {
+    const { data } = await axios.get(
+      "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/tv?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
+    );
+    setState((state) => ({ ...state, favourite: data.results }));
+  };
+
+  const fetchFavouriteMovies = async () => {
+    const { data } = await axios.get(
+      "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/movies?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
+    );
+    setState((state) => ({ ...state, favouriteMovie: data.results }));
+  };
+
   const options = [
     {
       label: "On Tv",
@@ -117,6 +134,8 @@ function Movies() {
     fetchTV();
     fetchTrendingDay();
     fetchTrendingWeek();
+    fetchFavourites();
+    fetchFavouriteMovies();
   }, []);
 
   const initialSelectedIndex = options.findIndex(({ value }) => value === "");
@@ -153,6 +172,14 @@ function Movies() {
               {tabName == "ontv"
                 ? state.tv.map((item) => (
                     <Card
+                      mediaType={"tv"}
+                      like={
+                        state.favourite.find((i) => i?.id == item?.id) ||
+                        state.favouriteMovie.find((i) => i?.id == item?.id)
+                          ? true
+                          : false
+                      }
+                      key={item?.id}
                       img={item?.poster_path}
                       progress={item?.vote_average}
                       title={item?.name}
@@ -166,6 +193,14 @@ function Movies() {
                   ))
                 : state.theaters.map((item) => (
                     <Card
+                      mediaType={"movie"}
+                      like={
+                        state.favourite.find((i) => i?.id == item?.id) ||
+                        state.favouriteMovie.find((i) => i?.id == item?.id)
+                          ? true
+                          : false
+                      }
+                      key={item?.id}
                       img={item?.poster_path}
                       progress={item?.vote_average}
                       title={item?.title}
@@ -193,6 +228,14 @@ function Movies() {
               {trend == "day"
                 ? state.day.map((item) => (
                     <Card
+                      mediaType={item?.media_type}
+                      like={
+                        state.favourite.find((i) => i?.id == item?.id) ||
+                        state.favouriteMovie.find((i) => i?.id == item?.id)
+                          ? true
+                          : false
+                      }
+                      key={item?.id}
                       img={item?.poster_path}
                       progress={item?.vote_average}
                       title={item?.title}
@@ -206,6 +249,13 @@ function Movies() {
                   ))
                 : state.week.map((item) => (
                     <Card
+                      mediaType={item?.media_type}
+                      like={
+                        state.favourite.find((i) => i?.id == item?.id) ||
+                        state.favouriteMovie.find((i) => i?.id == item?.id)
+                          ? true
+                          : false
+                      }
                       key={item?.id}
                       img={item?.poster_path}
                       progress={item?.vote_average}

@@ -5,20 +5,20 @@ import {
   FiMoreHorizontal,
   RiMenuAddLine,
   MdFavoriteBorder,
+  MdFavorite,
   BsBookmarkPlus,
   AiOutlineStar,
   AiOutlineClose,
 } from "react-icons/all";
 import StyledCard from "../styles/card";
 import axios from "axios";
-import { sendQuery } from "../utils/axios";
 import keys from "../configs";
-import Urls from "../utils/urls";
 
-function Card({ img, title, date, progress, id }) {
+function Card({ img, title, date, progress, id, like, mediaType }) {
   const [state, setState] = useState({
     more: false,
   });
+  const [favourite, setFavourite] = useState(false);
   let progressNumber = progress?.toString();
   let progressArr = progressNumber?.split(".");
   let progressPercent = progressArr?.join("");
@@ -27,17 +27,15 @@ function Card({ img, title, date, progress, id }) {
     progressPercent = progressPercent + "0";
   }
 
-  const fetchFavourites = () => {
-    const result = sendQuery(Urls.FAVOURITE_TV);
-  };
+  const dislike = !like;
 
   const handleFavourite = async (type, id) => {
     const result = await axios.post(
       `https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
-        media_type: `${type}`,
+        media_type: `${mediaType}`,
         media_id: `${id}`,
-        favorite: `${favourite}`,
+        favorite: dislike,
       }
     );
     console.log(result);
@@ -67,7 +65,11 @@ function Card({ img, title, date, progress, id }) {
             handleFavourite("movie", id);
           }}
         >
-          <MdFavoriteBorder size={20} />
+          {like || favourite ? (
+            <MdFavorite size={20} color="var(--red)" />
+          ) : (
+            <MdFavoriteBorder size={20} />
+          )}
           <p>Favourite</p>
         </div>
         <div className="card__dropdown-item">
@@ -87,21 +89,21 @@ function Card({ img, title, date, progress, id }) {
         percent={progressPercent}
         width={50}
         trailColor={`${
-          progress >= 7
+          progress < 4
+            ? "#4F1533"
+            : progress >= 7
             ? "#1E4228"
             : progress < 7
             ? "#423D0F"
-            : progress < 4
-            ? "#4F1533"
             : ""
         }`}
         strokeColor={`${
-          progress >= 7
+          progress < 4
+            ? "#DB2360"
+            : progress >= 7
             ? "#21D07A"
             : progress < 7
             ? "#D2D531"
-            : progress < 4
-            ? "#DB2360"
             : ""
         }`}
       />
