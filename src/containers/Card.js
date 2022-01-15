@@ -67,6 +67,8 @@ function Card({ img, title, date, progress, id, like, mediaType }) {
         >
           {like || favourite ? (
             <MdFavorite size={20} color="var(--red)" />
+          ) : !favourite ? (
+            <MdFavoriteBorder size={20} />
           ) : (
             <MdFavoriteBorder size={20} />
           )}
@@ -81,7 +83,7 @@ function Card({ img, title, date, progress, id, like, mediaType }) {
           <p>Your rating</p>
         </div>
       </div>
-      <Link to={`/tv/${id}`}>
+      <Link to={`/${mediaType || "tv"}/${id}`}>
         <img src={keys.IMG_URL + img} alt={title} className="card__img" />
       </Link>
       <Progress
@@ -108,7 +110,7 @@ function Card({ img, title, date, progress, id, like, mediaType }) {
         }`}
       />
       <div className="content">
-        <Link to={`/tv/${id}`}>
+        <Link to={`/${mediaType || "tv"}/${id}`}>
           <h2 className="card__title">{title}</h2>
         </Link>
         <p className="card__text">{date}</p>
