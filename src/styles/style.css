@@ -40,6 +40,15 @@ input[type="number"] {
   margin: 0 auto;
 }
 
+.ant-progress {
+  background: #081c22;
+  border-radius: 50%;
+}
+
+.ant-progress-text {
+  color: white !important;
+}
+
 @media screen and (max-width: 768px) {
   html {
     font-size: 8px;

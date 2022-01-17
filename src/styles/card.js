@@ -77,13 +77,7 @@ const StyledCard = styledComponents.div`
         bottom: 16%;
         left: 5%;
         z-index: 10;
-        background: #081C22;
-        border-radius: 50%;
-
-        .ant-progress-text {
-            color: white;
-        }
-    }
+    }    
     .content {
         padding-left: 15px;
 
