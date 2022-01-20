@@ -32,7 +32,7 @@ const StyledMovies = styledComponents.section`
             cursor: pointer;
             background: var(--red);
             color: white;
-            font-size: 16px;
+            font-size: 1.6rem;
             display: flex;
             justify-content: center;
             align-items: center;

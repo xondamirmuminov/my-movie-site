@@ -12,7 +12,9 @@ import {
   MdFavorite,
   BsFillBookmarkFill,
   FaStar,
+  BsArrowRight,
 } from "react-icons/all";
+import Avatar from "../../assets/avatar-icon-images-4.jpg";
 
 function MovieView(props) {
   const [state, setState] = useState({});
@@ -38,6 +40,17 @@ function MovieView(props) {
     fetchCredits();
   }, []);
 
+  const popularCredit = [
+    { ...(credits?.cast ? credits?.cast[0] : null) },
+    { ...(credits?.cast ? credits?.cast[1] : null) },
+    { ...(credits?.cast ? credits?.cast[2] : null) },
+    { ...(credits?.cast ? credits?.cast[3] : null) },
+    { ...(credits?.cast ? credits?.cast[4] : null) },
+    { ...(credits?.cast ? credits?.cast[5] : null) },
+    { ...(credits?.cast ? credits?.cast[6] : null) },
+    { ...(credits?.cast ? credits?.cast[7] : null) },
+    { ...(credits?.cast ? credits?.cast[8] : null) },
+  ];
   const hour = Math.floor(state?.runtime / 60);
   const minute = state?.runtime % 60;
   let progressNumber = state?.vote_average?.toString();
@@ -48,10 +61,12 @@ function MovieView(props) {
     progressPercent = progressPercent + "0";
   }
   return (
-    <StyledMovieDetails>
-      <div className="container">
-        <div className="detail__inner">
-          <div className="home">
+    <StyledMovieDetails
+      bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
+    >
+      <div className="detail__inner">
+        <div className="home">
+          <div className="container">
             <Image
               width={300}
               height={450}
@@ -69,7 +84,7 @@ function MovieView(props) {
                   )
                 </span>
               </h2>
-              <div>
+              <div className="home__inner-date">
                 <p className="home__text">
                   {moment(state?.release_date).format("L")}
                 </p>
@@ -90,11 +105,11 @@ function MovieView(props) {
                   {hour}h {minute}m
                 </p>
               </div>
-              <div>
+              <div className="home__inner-score">
                 <Progress
                   type="circle"
                   percent={progressPercent}
-                  width={50}
+                  width={68}
                   trailColor={`${
                     state?.vote_average < 4
                       ? "#4F1533"
@@ -117,30 +132,73 @@ function MovieView(props) {
                 <span>User Score</span>
                 <div className="home__inner-btn">
                   <button>
-                    <RiMenuAddLine size={20} />
+                    <RiMenuAddLine size={20} color="white" />
                   </button>
                   <button>
-                    <MdFavorite size={20} />
+                    <MdFavorite size={19} color="white" />
                   </button>
                   <button>
-                    <BsFillBookmarkFill size={20} />
+                    <BsFillBookmarkFill size={19} color="white" />
                   </button>
                   <button>
-                    <FaStar size={20} />
+                    <FaStar size={19} color="white" />
                   </button>
                 </div>
-                <i>{state?.tagline}</i>
               </div>
+              <i>{state?.tagline}</i>
               <div className="home__overview">
                 <h3>Overview</h3>
                 <p>{state?.overview}</p>
               </div>
               <div className="home__jobs">
-                <div></div>
+                {credits?.crew
+                  ?.filter((item) => item.job == "Director")
+                  .map((item) => (
+                    <div key={item?.id}>
+                      <h3>{item?.name}</h3>
+                      <p>{item?.job}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
         </div>
+        <main className="body">
+          <div className="container">
+            <section className="body__block--large">
+              <h2 className="block__title">Top Billed Cast</h2>
+              <div className="card-inner">
+                {popularCredit?.map((item) => (
+                  <div key={item?.id} className="card">
+                    <Link to={`/credit/${item.credit_id}`}>
+                      <img
+                        src={
+                          item?.profile_path
+                            ? keys.IMG_URL + item?.profile_path
+                            : Avatar
+                        }
+                        alt={item?.name}
+                        className="card__img"
+                      />
+                    </Link>
+                    <div className="card__body">
+                      <h3 className="card__title">
+                        <Link to={`/credit/${item.credit_id}`}>
+                          {item?.name}
+                        </Link>
+                      </h3>
+                      <p className="card__text">{item?.character}</p>
+                    </div>
+                  </div>
+                ))}
+                <Link to={`/movie/${id}/cast`} className="card__view">
+                  View More <BsArrowRight size={25} />
+                </Link>
+              </div>
+            </section>
+            <section className="body__block--sm"></section>
+          </div>
+        </main>
       </div>
     </StyledMovieDetails>
   );
