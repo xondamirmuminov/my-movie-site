@@ -39,6 +39,7 @@ const StyledCast = styledComponents.section`
             flex-wrap: wrap;
             column-gap: 40px;
         }
+        
     }
 `;
 
