@@ -108,7 +108,7 @@ function MovieCast(props) {
                   <h4>
                     <Link to={`/credit/${item.credit_id}`}>{item?.name}</Link>
                   </h4>
-                  <p>{item?.character}</p>
+                  <p>{item?.job}</p>
                 </div>
               </div>
             ))}

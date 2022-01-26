@@ -33,13 +33,49 @@ const StyledCast = styledComponents.section`
         }
     }
     .cast-inner {
+        padding-bottom: 40px;
+
         .container {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            column-gap: 40px;
+            column-gap: 50px;
         }
-        
+        .cast__block {
+            min-width: 45%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+ 
+            h3 {
+                margin-top: 15px;
+                color: white;
+                font-size: 2.2rem;
+            }
+            .cast__card {
+                display: flex;
+                align-items: center;
+                column-gap: 20px;
+
+                a {
+                    width: 30%;
+                }
+                img {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+                h4 a {
+                    color: white;
+                    font-size: 2rem;
+                }
+                p {
+                    color: #ffffffd1;
+                }
+            }
+        }
     }
 `;
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Image } from "antd";
+import { Image, Tabs } from "antd";
 import keys from "../../configs";
 import StyledMovieDetails from "../../styles/pages/movieDetails";
 import moment from "moment";
@@ -15,10 +15,15 @@ import {
   BsArrowRight,
 } from "react-icons/all";
 import Avatar from "../../assets/avatar-icon-images-4.jpg";
+import ModalMovie from "./ModalMovie";
+
+const { TabPane } = Tabs;
 
 function MovieView(props) {
   const [state, setState] = useState({});
   const [credits, setCredits] = useState({});
+  const [image, setImage] = useState({});
+  const [video, setVideo] = useState({});
   const { id } = props.match.params;
 
   const fetchData = async () => {
@@ -35,9 +40,25 @@ function MovieView(props) {
     setCredits(data);
   };
 
+  const fetchImages = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${keys.API_KEY}`
+    );
+    setImage(data);
+  };
+
+  const fetchVideos = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${keys.API_KEY}`
+    );
+    setVideo(data);
+  };
+
   useEffect(() => {
     fetchData();
     fetchCredits();
+    fetchImages();
+    fetchVideos();
   }, []);
 
   const popularCredit = [
@@ -194,6 +215,43 @@ function MovieView(props) {
                 <Link to={`/movie/${id}/cast`} className="card__view">
                   View More <BsArrowRight size={25} />
                 </Link>
+              </div>
+              <Link to={`/movie/${state?.id}/cast`}>Full Cast & Crew</Link>
+              <div className="media">
+                <h2>Media</h2>
+                <Tabs defaultActiveKey="1">
+                  <TabPane tab="Most Popular" key="1">
+                    <img
+                      src={keys.IMG_URL + state?.backdrop_path}
+                      alt={state?.title}
+                    />
+                    <img
+                      src={keys.IMG_URL + state?.poster_path}
+                      alt={state?.title}
+                    />
+                  </TabPane>
+                  <TabPane tab={`Videos ${video?.results?.length}`} key="2">
+                    {video?.results?.map((item) => (
+                      <>
+                        <ModalMovie
+                          key={item?.key}
+                          channel={item?.channel}
+                          autoplay={true}
+                          id={item?.id}
+                        />
+                      </>
+                    ))}
+                  </TabPane>
+                  <TabPane
+                    tab={`Backdrops ${image?.backdrops?.length}`}
+                    key="3"
+                  >
+                    Content of Tab Pane 3
+                  </TabPane>
+                  <TabPane tab={`Posters ${image?.posters?.length}`} key="4">
+                    Content of Tab Pane 3
+                  </TabPane>
+                </Tabs>
               </div>
             </section>
             <section className="body__block--sm"></section>
