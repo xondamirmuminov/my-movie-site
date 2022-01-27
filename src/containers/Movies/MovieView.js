@@ -24,6 +24,7 @@ function MovieView(props) {
   const [credits, setCredits] = useState({});
   const [image, setImage] = useState({});
   const [video, setVideo] = useState({});
+  const [collection, setCollection] = useState({});
   const { id } = props.match.params;
 
   const fetchData = async () => {
@@ -54,12 +55,25 @@ function MovieView(props) {
     setVideo(data);
   };
 
+  const fetchCollection = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/collection/${state?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
+    );
+    setCollection(data);
+  };
+
   useEffect(() => {
     fetchData();
     fetchCredits();
     fetchImages();
     fetchVideos();
   }, []);
+
+  useEffect(() => {
+    if (state?.belongs_to_collection) {
+      fetchCollection();
+    }
+  }, [state]);
 
   const popularCredit = [
     { ...(credits?.cast ? credits?.cast[0] : null) },
@@ -81,9 +95,15 @@ function MovieView(props) {
   if (progressPercent?.length == 1) {
     progressPercent = progressPercent + "0";
   }
+
   return (
     <StyledMovieDetails
       bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
+      collectionBg={
+        collection.parts
+          ? keys.IMG_URL + state?.belongs_to_collection?.poster_path
+          : null
+      }
     >
       <div className="detail__inner">
         <div className="home">
@@ -216,7 +236,9 @@ function MovieView(props) {
                   View More <BsArrowRight size={25} />
                 </Link>
               </div>
-              <Link to={`/movie/${state?.id}/cast`}>Full Cast & Crew</Link>
+              <Link className="cast" to={`/movie/${state?.id}/cast`}>
+                Full Cast & Crew
+              </Link>
               <div className="media">
                 <h2>Media</h2>
                 <Tabs defaultActiveKey="1">
@@ -231,28 +253,56 @@ function MovieView(props) {
                     />
                   </TabPane>
                   <TabPane tab={`Videos ${video?.results?.length}`} key="2">
-                    {video?.results?.map((item) => (
-                      <>
-                        <ModalMovie
-                          key={item?.key}
-                          channel={item?.channel}
-                          autoplay={true}
-                          id={item?.id}
-                        />
-                      </>
-                    ))}
+                    {video?.results?.map((item) => {
+                      return (
+                        <>
+                          <ModalMovie
+                            videoId={item?.key}
+                            channel={item?.site?.toLowerCase()}
+                            id={item?.id}
+                            image={keys.IMG_URL + state?.backdrop_path}
+                          />
+                        </>
+                      );
+                    })}
                   </TabPane>
                   <TabPane
                     tab={`Backdrops ${image?.backdrops?.length}`}
                     key="3"
                   >
-                    Content of Tab Pane 3
+                    {image?.backdrops?.map((item) => (
+                      <img
+                        key={item?.file_path}
+                        src={keys.IMG_URL + item?.file_path}
+                        alt={state?.title}
+                      />
+                    ))}
                   </TabPane>
                   <TabPane tab={`Posters ${image?.posters?.length}`} key="4">
-                    Content of Tab Pane 3
+                    {image?.posters?.map((item) => (
+                      <img
+                        key={item?.file_path}
+                        src={keys.IMG_URL + item?.file_path}
+                        alt={state?.title}
+                      />
+                    ))}
                   </TabPane>
                 </Tabs>
               </div>
+              {state?.belongs_to_collection ? (
+                <div className="collection">
+                  <h1>Part of the {state?.belongs_to_collection?.name}</h1>
+                  <p>
+                    Includes{" "}
+                    {collection?.parts?.map((item) => (
+                      <span>{item?.title}, </span>
+                    ))}
+                  </p>
+                  <Link to={`/collection/${state?.belongs_to_collection?.id}`}>
+                    View Collection
+                  </Link>
+                </div>
+              ) : null}
             </section>
             <section className="body__block--sm"></section>
           </div>

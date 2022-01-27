@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import ModalVideo from "react-modal-video";
+import { FiPlayCircle } from "react-icons/all";
 
-function ModalMovie({ key, channel, autoplay, id }) {
+function ModalMovie({ videoId, channel, id, image }) {
   const [isOpen, setOpen] = useState(false);
 
   return (
     <>
       <ModalVideo
+        key={id}
         channel={channel}
-        autoplay={autoplay}
+        autoplay
         isOpen={isOpen}
-        videoId={key}
+        videoId={videoId}
         onClose={() => setOpen(false)}
       />
-      <button onClick={() => setOpen(!isOpen)}>View</button>
+      <div className="card">
+        <img src={image} alt={channel} />
+        <button onClick={() => setOpen(!isOpen)}>
+          <FiPlayCircle size={70} color="white" />
+        </button>
+      </div>
     </>
   );
 }

@@ -116,25 +116,6 @@ const StyledMovieDetails = styledComponents.section`
                 column-gap: 20px;
                 overflow-x: scroll;
                 
-                &::-webkit-scrollbar {
-                    height: 8px;
-                  }
-                  
-                  &::-webkit-scrollbar-track {
-                    background: #f1f1f1;
-                    border-radius: 6px; 
-                }
-                
-                &::-webkit-scrollbar-thumb {
-                    background: #888; 
-                    border-radius: 6px; 
-                }
-                
-                &::-webkit-scrollbar-thumb:hover {
-                    background: #555; 
-                    border-radius: 6px; 
-                  }
-
                 .card {
                     min-width: 180px;
                     height: 300px;
@@ -151,8 +132,9 @@ const StyledMovieDetails = styledComponents.section`
                         padding: 0 10px;
 
                         .card__title {
-                            font-size: 1.6rem;
                             margin: 0;
+                            margin-top: 5px;
+                            font-size: 1.6rem;
 
                             a {
                                 color: white;
@@ -169,6 +151,112 @@ const StyledMovieDetails = styledComponents.section`
                     align-items: center;
                     column-gap: 3px;
                     color: white; 
+                }
+            }
+            .cast {
+                margin: 30px 0;
+                padding-bottom: 30px;
+                display: block;
+                color: #ffffffc7;
+                font-size: 1.8rem;
+                border-bottom: 1px solid #ffffff21;
+            }
+            .media {
+                position: relative;
+
+                h2 {
+                    position: absolute;
+                    left: 0;
+                    margin: 0;
+                    top: 10px;
+                    color: #ffffffc7;
+                }
+                .card {
+                    position: relative;
+                    
+                    button {
+                        position: absolute;
+                        left: 44%;
+                        top: 35%;
+                        background: transparent;
+                        border: 0;
+                        cursor: pointer;
+                    }
+                    
+                    &::before {
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        background: #000000ed;
+                        border-radius: 9px;
+                    }
+
+                }
+                img {
+                    border-radius: 10px;
+                }
+            }
+            .ant-tabs-tabpane {
+                height: 300px;
+                padding-bottom: 10px;
+                display: flex;
+                column-gap: 15px;
+                overflow-x: auto;
+            }
+            .ant-tabs-nav {
+                margin-left: 100px;
+            }
+            .ant-tabs-tab-btn {
+               color: #ffffff96;
+            }
+            .ant-tabs-top > .ant-tabs-nav::before, .ant-tabs-bottom > .ant-tabs-nav::before, .ant-tabs-top > div > .ant-tabs-nav::before, .ant-tabs-bottom > div > .ant-tabs-nav::before {
+                border-bottom: 1px solid #ffffff96;
+            }
+            .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+                color: white !important;
+            }
+            .ant-tabs-ink-bar {
+                background: white;
+            }
+        }
+        .collection {
+            height: 260px;
+            margin-top: 50px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            border-radius: 10px;
+            background: linear-gradient(to right, rgba(3,37,65,1) 0%, rgba(3,37,65,0.6) 100%), url(${(
+              props
+            ) => props?.collectionBg});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+
+            h1 {
+                margin: 0;
+                color: white;
+                font-size: 2.6rem;
+            }
+            p {
+                font-size: 1.6rem;
+            }
+            a {
+                padding: 8px 16px;
+                border-radius: 6px;
+                background: transparent;
+                border: 1px solid var(--red);
+                color: var(--red);
+                font-size: 16px;
+
+                &:hover {
+                    background: var(--red);
+                    color: white;
                 }
             }
         }
