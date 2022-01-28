@@ -42,42 +42,6 @@ const StyledMovies = styledComponents.section`
             }
         }
     }
-    .movie__switch {
-        display: flex;
-        column-gap: 20px;
-        margin-bottom: 30px;
-
-        h2 {
-            color: white;
-        }
-        .react-switch-selector-wrapper {
-            width: 200px;
-            height: 35px;
-
-            &::before {
-                width: 50%;
-                height: calc(100% - -1px);
-            }
-        }
-    }
-    .slick-next, .slick-prev {
-        bottom -60px !important;
-        top: inherit;
-    }
-    .slick-next {
-        right: 40px;
-    }
-    .slick-prev {
-        left: inherit;
-        right: 90px;
-        margin-right: 15px;
-    }
-    .slick-next:before, .slick-prev:before {
-        line-height: 1;
-        background: #000000b5;
-        border-radius: 50%;
-        padding: 10px 15px;
-    }
 `;
 
 export default StyledMovies;

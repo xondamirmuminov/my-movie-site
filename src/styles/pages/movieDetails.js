@@ -260,6 +260,65 @@ const StyledMovieDetails = styledComponents.section`
                 }
             }
         }
+        .recommendations {
+            h1 {
+                margin: 40px 0;
+                padding: 20px 0 0 0;
+                border-top: 1px solid #ffffff21;
+                font-size: 2.4rem;
+                color: white;
+            }
+            .slick-track {
+                display: flex;
+                column-gap: 65px;
+            }
+            .recommendations__card {
+                min-width: 250px;
+                flex: 1;
+
+                .recommendations__card-hidden {
+                    width: 250px;
+                    padding: 12px 10px;
+                    display: flex;
+                    column-gap: 5px;
+                    color: white;
+                    font-size: 1.4rem;
+                    background: #000000c9;
+                    border-radius: 0 0 10px 10px;
+                    opacity: 0;
+                    position: absolute;
+                    top: 95.5px;
+                    transition: .6s;
+                }
+                .img-inner img {
+                    width: 100%;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+                }
+                .img-inner:hover + .recommendations__card-hidden {
+                    opacity: 1;
+                }
+                .recommendations__card-body {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                h2 {
+                    margin: 0;
+                    font-size: 1.6rem;
+
+                    a{
+                        color: white;
+                    }
+                }
+                .ant-progress-text {
+                    font-size: 12px;
+                }
+            }
+        }
+        .slick-next, .slick-prev {
+            bottom: -35px !important;
+        }
     }
 `;
 

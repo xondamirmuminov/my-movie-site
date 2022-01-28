@@ -13,9 +13,15 @@ import {
   BsFillBookmarkFill,
   FaStar,
   BsArrowRight,
+  AiOutlineCalendar,
+  AiFillFacebook,
+  AiOutlineTwitter,
+  AiFillInstagram,
+  BsLink,
 } from "react-icons/all";
 import Avatar from "../../assets/avatar-icon-images-4.jpg";
 import ModalMovie from "./ModalMovie";
+import Slider from "react-slick";
 
 const { TabPane } = Tabs;
 
@@ -25,7 +31,47 @@ function MovieView(props) {
   const [image, setImage] = useState({});
   const [video, setVideo] = useState({});
   const [collection, setCollection] = useState({});
+  const [recommendations, setRecommendations] = useState({});
+  const [keywords, setKeywords] = useState({});
   const { id } = props.match.params;
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 7000,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
   const fetchData = async () => {
     const { data } = await axios.get(
@@ -62,12 +108,37 @@ function MovieView(props) {
     setCollection(data);
   };
 
+  const fetchRecommendations = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${keys.API_KEY}`
+    );
+    setRecommendations(data);
+  };
+
+  const fetchKeywords = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/keywords?api_key=${keys.API_KEY}`
+    );
+    setKeywords(data);
+  };
+
   useEffect(() => {
     fetchData();
     fetchCredits();
     fetchImages();
     fetchVideos();
+    fetchRecommendations();
+    fetchKeywords();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+    fetchCredits();
+    fetchImages();
+    fetchVideos();
+    fetchRecommendations();
+    fetchKeywords();
+  }, [id]);
 
   useEffect(() => {
     if (state?.belongs_to_collection) {
@@ -303,8 +374,69 @@ function MovieView(props) {
                   </Link>
                 </div>
               ) : null}
+              <div className="recommendations">
+                <h1>Recommendations</h1>
+                <Slider style={{ marginTop: "20px" }} {...settings}>
+                  {recommendations?.results?.map((item) => {
+                    let progressItemNumber = item?.vote_average?.toString();
+                    let progressItemArr = progressItemNumber?.split(".");
+                    progressItemArr[1] = progressItemArr[1]?.slice(0, 1);
+                    let progressItemPercent = progressItemArr?.join("");
+
+                    if (progressItemPercent?.length == 1) {
+                      progressItemPercent = progressItemPercent + "0";
+                    }
+                    return (
+                      <div key={item?.id} className="recommendations__card">
+                        <Link className="img-inner" to={`/movie/${item?.id}`}>
+                          <img
+                            src={keys.IMG_URL + item?.backdrop_path}
+                            alt={item?.title}
+                          />
+                        </Link>
+                        <h3 className="recommendations__card-hidden">
+                          <AiOutlineCalendar size={20} />
+                          <span>{item?.release_date}</span>
+                        </h3>
+                        <div className="recommendations__card-body">
+                          <h2>
+                            <Link to={`/movie/${item?.id}`}>{item?.title}</Link>
+                          </h2>
+                          <Progress
+                            type="circle"
+                            percent={progressItemPercent}
+                            width={40}
+                            trailColor={`${
+                              item?.vote_average < 4
+                                ? "#4F1533"
+                                : item?.vote_average >= 7
+                                ? "#1E4228"
+                                : item?.vote_average < 7
+                                ? "#423D0F"
+                                : ""
+                            }`}
+                            strokeColor={`${
+                              item?.vote_average < 4
+                                ? "#DB2360"
+                                : item?.vote_average >= 7
+                                ? "#21D07A"
+                                : item?.vote_average < 7
+                                ? "#D2D531"
+                                : ""
+                            }`}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Slider>
+              </div>
             </section>
-            <section className="body__block--sm"></section>
+            <section className="body__block--sm">
+              <div className="social">
+                {/* <Link to={`/https://www.facebook.com/${}`}></Link> */}
+              </div>
+            </section>
           </div>
         </main>
       </div>

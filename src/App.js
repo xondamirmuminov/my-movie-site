@@ -17,7 +17,9 @@ function App() {
               justifyContent: "space-between",
             }}
           >
-            <img width={100} src={Netflix} alt="logo" />
+            <Link to="/">
+              <img width={100} src={Netflix} alt="logo" />
+            </Link>
             <Menu
               style={{ width: "50%", justifyContent: "flex-end" }}
               theme="dark"
