@@ -205,6 +205,12 @@ const GlobalStyles = createGlobalStyle`
         border-radius: 50%;
         padding: 10px 15px;
     }
+    .ant-popover-inner {
+        background-color: #001529 !important;
+    }
+    .ant-popover-arrow-content {
+        background-color: #000000b5;
+    }
 `;
 
 export default GlobalStyles;
