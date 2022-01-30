@@ -1,15 +1,17 @@
 import React from "react";
+import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 import App from "./App";
 import GlobalStyles from "./styles";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { ToastContainer } from "react-toastify";
+import store from "./store";
 import "./styles/style.css";
 import "antd/dist/antd.css";
 
 ReactDOM.render(
-  <>
+  <Provider store={store}>
     <GlobalStyles />
     <ToastContainer
       position="top-center"
@@ -36,7 +38,7 @@ ReactDOM.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </>,
+  </Provider>,
   document.getElementById("root")
 );
 

@@ -1,7 +1,10 @@
 import Axios from "axios";
 import keys from "../configs";
+import store from "../store";
+import { loading } from "../store/actions";
+
 const baseURL = keys.BACKEND_API;
-const axios = Axios.create({ baseURL, withCredentials: true });
+const axios = Axios.create({ baseURL, withCredentials: true, timeout: 20000 });
 
 export function sendQuery(url) {
   return axios
@@ -20,4 +23,36 @@ export function sendQueryPost(url) {
     })
     .catch((err) => err);
 }
+
+axios.interceptors.request.use((configs) => {
+  store.dispatch(loading(true));
+  return configs;
+});
+
+axios.interceptors.response.use(
+  (res) => {
+    store.dispatch(loading(false));
+    return res;
+  },
+  (error) => {
+    store.dispatch(loading(false));
+    return Promise.reject(error);
+  }
+);
+
+Axios.interceptors.request.use((configs) => {
+  store.dispatch(loading(true));
+  return configs;
+});
+
+Axios.interceptors.response.use(
+  (res) => {
+    store.dispatch(loading(false));
+    return res;
+  },
+  (error) => {
+    store.dispatch(loading(false));
+    return Promise.reject(error);
+  }
+);
 export default axios;

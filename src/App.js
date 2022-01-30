@@ -1,14 +1,19 @@
 import React from "react";
 import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Layout, Menu } from "antd";
 import routes from "./routes";
 import Netflix from "./assets/Netflix-Logo.wine (1).svg";
+import Spinner from "./components/Spinner";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
+  const loading = useSelector((state) => state.loading);
+
   return (
     <div className="App">
+      <Spinner loading={loading.loading} />
       <BrowserRouter>
         <Layout style={{ minHeight: "100vh" }} className="layout">
           <Header
