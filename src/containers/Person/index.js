@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Image } from "antd";
 import {
   AiFillFacebook,
@@ -98,8 +99,61 @@ function Person(props) {
               <h3>Known Credits</h3>
               <p>{credits?.cast?.length + credits?.crew?.length}</p>
               <h3>Gender</h3>
-              <p>{credits?.cast?.length + credits?.crew?.length}</p>
+              <p>{credit?.gender == 2 ? "Male" : "Female"}</p>
+              <h3>Birthday</h3>
+              <p>
+                {credit?.deathday
+                  ? credit?.birthday
+                  : credit?.birthday +
+                    " " +
+                    `(${
+                      new Date().getFullYear() - credit?.birthday?.split("-")[0]
+                    } years old)`}
+              </p>
+              {credit?.deathday ? (
+                <>
+                  <h3>Day of Death</h3>
+                  <p>
+                    {credit?.deathday}{" "}
+                    {`(${
+                      credit?.deathday.split("-")[0] -
+                      credit?.birthday?.split("-")[0]
+                    } years old)`}
+                  </p>
+                </>
+              ) : null}
+              <h3>Place of Birth</h3>
+              <p>{credit?.place_of_birth ?? "-"}</p>
+              <h3>Also Known As</h3>
+              {credit?.also_known_as
+                ? credit?.also_known_as?.map((item) => <p>{item}</p>)
+                : "-"}
             </div>
+          </div>
+          <div className="person__block--lg">
+            <h1>{credit?.name}</h1>
+            <h3>Biography</h3>
+            <p className="text">{credit?.biography ?? "-"}</p>
+          </div>
+          <div className="card-inner">
+            {credits?.cast
+              ?.filter(
+                (item) =>
+                  item?.vote_average > 7 &&
+                  item?.media_type == "movie" &&
+                  !item?.character?.includes("voice")
+              )
+              ?.map((item) => (
+                <div className="card">
+                  <img
+                    src={keys.IMG_URL + item?.poster_path}
+                    alt={item?.title}
+                  />
+                  <h3>
+                    <Link to={`/movie/${item?.id}`}>{item?.title}</Link>
+                  </h3>
+                </div>
+              ))}
           </div>
         </div>
       </div>
