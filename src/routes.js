@@ -1,5 +1,6 @@
 import React from "react";
 import Home from "./containers/Home";
+import Movie from "./containers/Movies/Movie";
 import MovieView from "./containers/Movies/MovieView";
 import MovieCast from "./containers/Movies/MovieCast";
 import Person from "./containers/Person";
@@ -9,6 +10,11 @@ export default [
     path: "/",
     component: Home,
     key: "home",
+  },
+  {
+    path: "/movies",
+    component: Movie,
+    key: "movie",
   },
   {
     path: "/movie/:id",

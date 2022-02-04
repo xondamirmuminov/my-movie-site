@@ -355,7 +355,14 @@ function MovieView(props) {
                   ?.filter((item) => item.job == "Director")
                   .map((item) => (
                     <div key={item?.id}>
-                      <h3>{item?.name}</h3>
+                      <h3>
+                        <Link
+                          style={{ color: "white" }}
+                          to={`/person/${item?.id}`}
+                        >
+                          {item?.name}
+                        </Link>
+                      </h3>
                       <p>{item?.job}</p>
                     </div>
                   ))}

@@ -29,10 +29,9 @@ function App() {
               style={{ width: "50%", justifyContent: "flex-end" }}
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={["0"]}
             >
               <Menu.Item key="0">
-                <Link to="/">Home</Link>
+                <Link to="/movies">Movies</Link>
               </Menu.Item>
               <Menu.Item key="1">
                 <Link to="/tv">TV Shows</Link>

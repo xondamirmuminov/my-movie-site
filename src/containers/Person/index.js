@@ -10,6 +10,7 @@ import {
 } from "react-icons/all";
 import keys from "../../configs";
 import StyledPerson from "../../styles/pages/person";
+import NoneImage from "../../assets/image.svg";
 
 function Person(props) {
   const [credit, setCredit] = useState({});
@@ -58,7 +59,11 @@ function Person(props) {
             <Image
               width={300}
               height={450}
-              src={`${keys.IMG_URL + credit?.profile_path}`}
+              src={`${
+                credit?.profile_path
+                  ? keys.IMG_URL + credit?.profile_path
+                  : NoneImage
+              }`}
             />
             <div className="social">
               {social?.facebook_id ? (
@@ -94,14 +99,14 @@ function Person(props) {
             </div>
             <div className="personal">
               <h1>Personal Info</h1>
-              <h3>Known For</h3>
-              <p>{credit?.known_for_department}</p>
-              <h3>Known Credits</h3>
-              <p>{credits?.cast?.length + credits?.crew?.length}</p>
-              <h3>Gender</h3>
-              <p>{credit?.gender == 2 ? "Male" : "Female"}</p>
-              <h3>Birthday</h3>
-              <p>
+              <p>Known For</p>
+              <h3>{credit?.known_for_department}</h3>
+              <p>Known Credits</p>
+              <h3>{credits?.cast?.length + credits?.crew?.length}</h3>
+              <p>Gender</p>
+              <h3>{credit?.gender == 2 ? "Male" : "Female"}</h3>
+              <p>Birthday</p>
+              <h3>
                 {credit?.deathday
                   ? credit?.birthday
                   : credit?.birthday +
@@ -109,24 +114,24 @@ function Person(props) {
                     `(${
                       new Date().getFullYear() - credit?.birthday?.split("-")[0]
                     } years old)`}
-              </p>
+              </h3>
               {credit?.deathday ? (
                 <>
-                  <h3>Day of Death</h3>
-                  <p>
+                  <p>Day of Death</p>
+                  <h3>
                     {credit?.deathday}{" "}
                     {`(${
                       credit?.deathday.split("-")[0] -
                       credit?.birthday?.split("-")[0]
                     } years old)`}
-                  </p>
+                  </h3>
                 </>
               ) : null}
-              <h3>Place of Birth</h3>
-              <p>{credit?.place_of_birth ?? "-"}</p>
-              <h3>Also Known As</h3>
+              <p>Place of Birth</p>
+              <h3>{credit?.place_of_birth ?? "-"}</h3>
+              <p>Also Known As</p>
               {credit?.also_known_as
-                ? credit?.also_known_as?.map((item) => <p>{item}</p>)
+                ? credit?.also_known_as?.map((item) => <h3>{item}</h3>)
                 : "-"}
             </div>
           </div>
@@ -134,26 +139,147 @@ function Person(props) {
             <h1>{credit?.name}</h1>
             <h3>Biography</h3>
             <p className="text">{credit?.biography ?? "-"}</p>
-          </div>
-          <div className="card-inner">
-            {credits?.cast
-              ?.filter(
-                (item) =>
-                  item?.vote_average > 7 &&
-                  item?.media_type == "movie" &&
-                  !item?.character?.includes("voice")
-              )
-              ?.map((item) => (
-                <div className="card">
-                  <img
-                    src={keys.IMG_URL + item?.poster_path}
-                    alt={item?.title}
-                  />
+            <h2>Known For</h2>
+            <div className="card-inner">
+              {credits?.cast
+                ?.filter(
+                  (item) =>
+                    item?.vote_average > 7 &&
+                    item?.media_type == "movie" &&
+                    !item?.character?.includes("voice")
+                )
+                ?.map((item) => (
+                  <div className="card" key={item?.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item?.poster_path
+                            : NoneImage
+                        }
+                        alt={item?.title}
+                      />
+                    </Link>
+                    <h3>
+                      <Link to={`/movie/${item?.id}`}>{item?.title}</Link>
+                    </h3>
+                  </div>
+                ))}
+            </div>
+            <h2 className="acting-title">Acting</h2>
+            <div className="acting">
+              {credits?.cast?.map((item) => (
+                <div className="acting-item" key={item?.id}>
+                  <Link to={`/movie/${item?.id}`}>
+                    <img
+                      src={
+                        item?.poster_path
+                          ? keys.IMG_URL + item?.poster_path
+                          : NoneImage
+                      }
+                      alt={item?.title ?? item?.name}
+                    />
+                  </Link>
+                  <p className="acting__date">
+                    {item?.release_date?.split("-")[0]}
+                  </p>
                   <h3>
-                    <Link to={`/movie/${item?.id}`}>{item?.title}</Link>
+                    <Link to={`/movie/${item?.id}`}>
+                      {item?.title ?? item?.name}
+                    </Link>
                   </h3>
+                  <span className="acting__as">as</span>
+                  <h3 className="acting__actor">{item?.character}</h3>
                 </div>
               ))}
+            </div>
+            <h2 className="acting-title">Production</h2>
+            <div className="acting">
+              {credits?.crew
+                ?.filter((item) => item.department === "Production")
+                ?.map((item) => (
+                  <div className="acting-item" key={item?.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item?.poster_path
+                            : NoneImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <p className="acting__date">
+                      {item?.release_date?.split("-")[0]}
+                    </p>
+                    <h3>
+                      <Link to={`/movie/${item?.id}`}>
+                        {item?.title ?? item?.name}
+                      </Link>
+                    </h3>
+                    <span className="acting__as">as</span>
+                    <h3 className="acting__actor">{item?.character}</h3>
+                  </div>
+                ))}
+            </div>
+            <h2 className="acting-title">Crew</h2>
+            <div className="acting">
+              {credits?.crew
+                ?.filter((item) => item.department === "Crew")
+                ?.map((item) => (
+                  <div className="acting-item" key={item?.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item?.poster_path
+                            : NoneImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <p className="acting__date">
+                      {item?.release_date?.split("-")[0]}
+                    </p>
+                    <h3>
+                      <Link to={`/movie/${item?.id}`}>
+                        {item?.title ?? item?.name}
+                      </Link>
+                    </h3>
+                    <span className="acting__as">as</span>
+                    <h3 className="acting__actor">{item?.character}</h3>
+                  </div>
+                ))}
+            </div>
+            <h2 className="acting-title">Directing</h2>
+            <div className="acting">
+              {credits?.crew
+                ?.filter((item) => item.department === "Directing")
+                ?.map((item) => (
+                  <div className="acting-item" key={item?.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item?.poster_path
+                            : NoneImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <p className="acting__date">
+                      {item?.release_date?.split("-")[0]}
+                    </p>
+                    <h3>
+                      <Link to={`/movie/${item?.id}`}>
+                        {item?.title ?? item?.name}
+                      </Link>
+                    </h3>
+                    <span className="acting__as">as</span>
+                    <h3 className="acting__actor">{item?.character}</h3>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
