@@ -387,6 +387,17 @@ const StyledMovieDetails = styled.section`
           border-radius: 6px;
         }
       }
+      .about__logo {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 15px;
+
+        img {
+          width: 180px;
+          margin-top: 5px;
+          margin-bottom: 15px;
+        }
+      }
     }
   }
 `;

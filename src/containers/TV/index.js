@@ -8,12 +8,12 @@ import StyledMovie from "../../styles/pages/moviePage";
 import Card from "../Card";
 import keys from "../../configs";
 
-function Movie() {
+function TV() {
   const [data, setData] = useState({});
   const [search, setSearch] = useState("");
 
   const fetchData = async () => {
-    const data = await sendQuery(URLS.POPULAR_MOVIES);
+    const data = await sendQuery(URLS.TV_POPULAR);
     setData(data);
   };
 
@@ -21,10 +21,10 @@ function Movie() {
     const { data } = await axios.get(
       `${
         search
-          ? `https://api.themoviedb.org/3/search/movie?api_key=${
+          ? `https://api.themoviedb.org/3/search/tv?api_key=${
               keys.API_KEY
             }&query=${search.toLowerCase()}&page=${page}`
-          : `https://api.themoviedb.org/3/movie/popular?api_key=${keys.API_KEY}&page=${page}`
+          : `https://api.themoviedb.org/3/tv/popular?api_key=${keys.API_KEY}&page=${page}`
       }`
     );
     setData(data);
@@ -39,7 +39,7 @@ function Movie() {
       fetchData();
     } else {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${
+        `https://api.themoviedb.org/3/search/tv?api_key=${
           keys.API_KEY
         }&query=${search.toLowerCase()}`
       );
@@ -55,13 +55,13 @@ function Movie() {
     <StyledMovie>
       <div className="container">
         <div className="movie__inner">
-          <h1>Movies</h1>
+          <h1>TV Shows</h1>
           <div className="movie__search">
             <input
               onChange={handleSearchInputChange}
               value={search}
               type="text"
-              placeholder="Search movie"
+              placeholder="Search TV Show"
             />
             <button onClick={handleSearch}>
               <AiOutlineSearch size={24} />
@@ -71,7 +71,7 @@ function Movie() {
           <div className="card-inner">
             {data?.results?.map((item) => (
               <Card
-                mediaType={"movie"}
+                mediaType={"tv"}
                 // like={
                 //   state.favourite.find((i) => i?.id == item?.id) ||
                 //   state.favouriteMovie.find((i) => i?.id == item?.id)
@@ -81,8 +81,8 @@ function Movie() {
                 key={item?.id}
                 img={item?.poster_path}
                 progress={item?.vote_average}
-                title={item?.title}
-                date={new Date(item?.release_date)
+                title={item?.name}
+                date={new Date(item?.first_air_date)
                   .toUTCString()
                   .split(" ")
                   .slice(0, 4)
@@ -102,4 +102,4 @@ function Movie() {
   );
 }
 
-export default Movie;
+export default TV;
