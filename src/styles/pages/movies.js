@@ -42,6 +42,12 @@ const StyledMovies = styled.section`
       }
     }
   }
+  .card-inner {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 20px;
+  }
 `;
 
 export default StyledMovies;

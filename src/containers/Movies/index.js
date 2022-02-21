@@ -5,8 +5,10 @@ import SwitchSelector from "react-switch-selector";
 import Urls from "../../utils/urls";
 import { sendQuery } from "../../utils/axios";
 import Card from "../Card";
+import PeopleCard from "../People/PeopleCard";
 import Slider from "react-slick";
 import axios from "axios";
+import keys from "../../configs";
 
 function Movies() {
   const [state, setState] = useState({
@@ -19,6 +21,8 @@ function Movies() {
   });
   const [tabName, setTabName] = useState("ontv");
   const [trend, setTrend] = useState("day");
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState([]);
   const settings = {
     dots: true,
     infinite: true,
@@ -103,6 +107,29 @@ function Movies() {
     setState((state) => ({ ...state, favouriteMovie: data.results }));
   };
 
+  const handleSearchInputChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSearch = async () => {
+    if (!search) {
+      fetchTheaters();
+      fetchTV();
+      fetchTrendingDay();
+      fetchTrendingWeek();
+      fetchFavourites();
+      fetchFavouriteMovies();
+      setData([]);
+    } else {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/search/multi?api_key=${
+          keys.API_KEY
+        }&query=${search.toLowerCase()}`
+      );
+      setData(data);
+    }
+  };
+
   const options = [
     {
       label: "On Tv",
@@ -148,85 +175,29 @@ function Movies() {
         <div className="movie__inner">
           <div className="movie__search">
             <input
+              onChange={handleSearchInputChange}
+              value={search}
               type="text"
-              placeholder="Search for a movie, tv show, person......"
+              placeholder="Search for a movie, tv show......"
               className="movie__search-inp"
             />
-            <button className="movie__search-btn">
-              <AiOutlineSearch size={24} /> Search
+            <button onClick={handleSearch}>
+              <AiOutlineSearch size={24} />
+              Search
             </button>
           </div>
-          <div className="movie__inner">
-            <div className="movie__switch">
-              <h2 className="movie__title">What's Popular</h2>
-              <SwitchSelector
-                onChange={handleTab}
-                options={options}
-                initialSelectedIndex={initialSelectedIndex}
-                backgroundColor={"white"}
-                fontColor={"black"}
-                fontSize={"20px"}
-              />
-            </div>
-            <Slider {...settings}>
-              {tabName == "ontv"
-                ? state.tv.map((item) => (
-                    <Card
-                      mediaType={"tv"}
-                      like={
-                        state.favourite.find((i) => i?.id == item?.id) ||
-                        state.favouriteMovie.find((i) => i?.id == item?.id)
-                          ? true
-                          : false
-                      }
-                      key={item?.id}
-                      img={item?.poster_path}
-                      progress={item?.vote_average}
-                      title={item?.name}
-                      date={new Date(item?.first_air_date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
-                      id={item?.id}
-                    />
-                  ))
-                : state.theaters.map((item) => (
-                    <Card
-                      mediaType={"movie"}
-                      like={
-                        state.favourite.find((i) => i?.id == item?.id) ||
-                        state.favouriteMovie.find((i) => i?.id == item?.id)
-                          ? true
-                          : false
-                      }
-                      key={item?.id}
-                      img={item?.poster_path}
-                      progress={item?.vote_average}
-                      title={item?.title}
-                      date={new Date(item?.release_date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
-                      id={item?.id}
-                    />
-                  ))}
-            </Slider>
-            <div className="movie__switch" style={{ marginTop: "100px" }}>
-              <h2 className="movie__title">What's Popular</h2>
-              <SwitchSelector
-                onChange={handleTrend}
-                options={trendOptions}
-                initialSelectedIndex={initialSelectedTrendIndex}
-                backgroundColor={"white"}
-                fontColor={"black"}
-                fontSize={"20px"}
-              />
-            </div>
-            <Slider style={{ marginTop: "20px" }} {...settings}>
-              {trend == "day"
-                ? state.day.map((item) => (
+          {data?.results ? (
+            <div className="card-inner">
+              {data?.results?.map((item) => {
+                if (item?.known_for_department) {
+                  <PeopleCard
+                    img={item?.profile_path}
+                    title={item?.name}
+                    id={item?.id}
+                    known_for={item?.known_for}
+                  />;
+                } else {
+                  return (
                     <Card
                       mediaType={item?.media_type}
                       like={
@@ -246,30 +217,126 @@ function Movies() {
                         .join(" ")}
                       id={item?.id}
                     />
-                  ))
-                : state.week.map((item) => (
-                    <Card
-                      mediaType={item?.media_type}
-                      like={
-                        state.favourite.find((i) => i?.id == item?.id) ||
-                        state.favouriteMovie.find((i) => i?.id == item?.id)
-                          ? true
-                          : false
-                      }
-                      key={item?.id}
-                      img={item?.poster_path}
-                      progress={item?.vote_average}
-                      title={item?.title}
-                      date={new Date(item?.release_date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
-                      id={item?.id}
-                    />
-                  ))}
-            </Slider>
-          </div>
+                  );
+                }
+              })}
+            </div>
+          ) : (
+            <div className="movie__inner">
+              <div className="movie__switch">
+                <h2 className="movie__title">What's Popular</h2>
+                <SwitchSelector
+                  onChange={handleTab}
+                  options={options}
+                  initialSelectedIndex={initialSelectedIndex}
+                  backgroundColor={"white"}
+                  fontColor={"black"}
+                  fontSize={"20px"}
+                />
+              </div>
+              <Slider {...settings}>
+                {tabName == "ontv"
+                  ? state.tv.map((item) => (
+                      <Card
+                        mediaType={"tv"}
+                        like={
+                          state.favourite.find((i) => i?.id == item?.id) ||
+                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                            ? true
+                            : false
+                        }
+                        key={item?.id}
+                        img={item?.poster_path}
+                        progress={item?.vote_average}
+                        title={item?.name}
+                        date={new Date(item?.first_air_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                        id={item?.id}
+                      />
+                    ))
+                  : state.theaters.map((item) => (
+                      <Card
+                        mediaType={"movie"}
+                        like={
+                          state.favourite.find((i) => i?.id == item?.id) ||
+                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                            ? true
+                            : false
+                        }
+                        key={item?.id}
+                        img={item?.poster_path}
+                        progress={item?.vote_average}
+                        title={item?.title}
+                        date={new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                        id={item?.id}
+                      />
+                    ))}
+              </Slider>
+              <div className="movie__switch" style={{ marginTop: "100px" }}>
+                <h2 className="movie__title">What's Popular</h2>
+                <SwitchSelector
+                  onChange={handleTrend}
+                  options={trendOptions}
+                  initialSelectedIndex={initialSelectedTrendIndex}
+                  backgroundColor={"white"}
+                  fontColor={"black"}
+                  fontSize={"20px"}
+                />
+              </div>
+              <Slider style={{ marginTop: "20px" }} {...settings}>
+                {trend == "day"
+                  ? state.day.map((item) => (
+                      <Card
+                        mediaType={item?.media_type}
+                        like={
+                          state.favourite.find((i) => i?.id == item?.id) ||
+                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                            ? true
+                            : false
+                        }
+                        key={item?.id}
+                        img={item?.poster_path}
+                        progress={item?.vote_average}
+                        title={item?.title}
+                        date={new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                        id={item?.id}
+                      />
+                    ))
+                  : state.week.map((item) => (
+                      <Card
+                        mediaType={item?.media_type}
+                        like={
+                          state.favourite.find((i) => i?.id == item?.id) ||
+                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                            ? true
+                            : false
+                        }
+                        key={item?.id}
+                        img={item?.poster_path}
+                        progress={item?.vote_average}
+                        title={item?.title}
+                        date={new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                        id={item?.id}
+                      />
+                    ))}
+              </Slider>
+            </div>
+          )}
         </div>
       </div>
     </StyledMovies>

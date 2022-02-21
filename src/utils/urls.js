@@ -6,6 +6,7 @@ const Urls = {
   TRENDING_WEEK: "trending/movie/week",
   NOW_PLAYING: "movie/now_playing",
   TV_POPULAR: "tv/popular",
+  PEOPLE_POPULAR: "/person/popular",
 };
 
 export default Urls;

@@ -7,6 +7,7 @@ import Person from "./containers/Person";
 import TV from "./containers/TV";
 import TvView from "./containers/TV/TvView";
 import TvCast from "./containers/TV/TvCast";
+import People from "./containers/People";
 
 export default [
   {
@@ -48,5 +49,10 @@ export default [
     path: "/tv/:id/cast",
     component: TvCast,
     key: "tvCast",
+  },
+  {
+    path: "/people",
+    component: People,
+    key: "people",
   },
 ];
