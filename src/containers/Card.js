@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progress } from "antd";
+import { Progress, Popover, Rate } from "antd";
 import { Link } from "react-router-dom";
 import {
   FiMoreHorizontal,
@@ -7,18 +7,23 @@ import {
   MdFavoriteBorder,
   MdFavorite,
   BsBookmarkPlus,
+  BsFillBookmarkFill,
   AiOutlineStar,
+  AiFillStar,
   AiOutlineClose,
 } from "react-icons/all";
 import StyledCard from "../styles/card";
 import axios from "axios";
 import keys from "../configs";
+import DefaultImage from "../assets/image.svg";
 
-function Card({ img, title, date, progress, id, like, mediaType }) {
+function Card({ img, title, date, progress, id, mediaType }) {
   const [state, setState] = useState({
     more: false,
   });
-  const [favourite, setFavourite] = useState(false);
+  const [account, setAccount] = useState({});
+  const [favorite, setFavorite] = useState();
+  const [watchList, setWatchList] = useState();
   let progressNumber = progress?.toString();
   let progressArr = progressNumber?.split(".");
   let progressPercent = progressArr?.join("");
@@ -27,19 +32,54 @@ function Card({ img, title, date, progress, id, like, mediaType }) {
     progressPercent = progressPercent + "0";
   }
 
-  const dislike = !like;
+  const fetchAccount = async () => {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
+    );
+    setAccount(data);
+    setFavorite(data?.favorite);
+    setWatchList(data?.watchlist);
+  };
 
-  const handleFavourite = async (type, id) => {
-    const result = await axios.post(
+  const handleFavorite = async (favorite) => {
+    const { data } = await axios.post(
       `https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
-        media_type: `${mediaType}`,
+        media_type: mediaType,
         media_id: `${id}`,
-        favorite: dislike,
+        favorite: favorite,
       }
     );
-    console.log(result);
+    setState({ more: false });
   };
+
+  const handleWatchlist = async (watchlist) => {
+    const { data } = await axios.post(
+      `
+      https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      {
+        media_type: mediaType,
+        media_id: `${id}`,
+        watchlist,
+      }
+    );
+    setState({ more: false });
+  };
+
+  const handleRate = async (value) => {
+    const { data } = await axios.post(
+      `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      {
+        value: `${value * 2}`,
+      }
+    );
+    setState({ more: false });
+  };
+
+  useEffect(() => {
+    fetchAccount();
+    setState({ more: false });
+  }, []);
 
   return (
     <StyledCard bg={state.more ? "#000000f2" : "none"}>
@@ -61,30 +101,60 @@ function Card({ img, title, date, progress, id, like, mediaType }) {
         <div
           className="card__dropdown-item"
           onClick={() => {
-            setFavourite(!favourite);
-            handleFavourite("movie", id);
+            setFavorite(!favorite);
+            handleFavorite(!favorite);
           }}
         >
-          {like || favourite ? (
+          {favorite ? (
             <MdFavorite size={20} color="var(--red)" />
-          ) : !favourite ? (
-            <MdFavoriteBorder size={20} />
           ) : (
             <MdFavoriteBorder size={20} />
           )}
           <p>Favourite</p>
         </div>
-        <div className="card__dropdown-item">
-          <BsBookmarkPlus size={20} />
+        <div
+          className="card__dropdown-item"
+          onClick={() => {
+            setWatchList(!watchList);
+            handleWatchlist(!watchList);
+          }}
+        >
+          {watchList ? (
+            <BsFillBookmarkFill size={20} color={"#21D07A"} />
+          ) : (
+            <BsBookmarkPlus size={20} />
+          )}
           <p>Watchlist</p>
         </div>
-        <div className="card__dropdown-item">
-          <AiOutlineStar size={20} />
-          <p>Your rating</p>
-        </div>
+        <Popover
+          placement="bottom"
+          content={
+            <Rate
+              allowHalf
+              defaultValue={account?.rated?.value / 2}
+              onChange={handleRate}
+            />
+          }
+          trigger="click"
+          style={{ backgroundColor: "#001529" }}
+          style={{ backgroundColor: "var(--bg-detail)" }}
+        >
+          <div className="card__dropdown-item">
+            {account?.rated?.value ? (
+              <AiFillStar size={20} color={"#FADB14"} />
+            ) : (
+              <AiOutlineStar size={20} />
+            )}
+            <p>Your rating</p>
+          </div>
+        </Popover>
       </div>
       <Link to={`/${mediaType || "tv"}/${id}`}>
-        <img src={keys.IMG_URL + img} alt={title} className="card__img" />
+        <img
+          src={img ? keys.IMG_URL + img : DefaultImage}
+          alt={title}
+          className="card__img"
+        />
       </Link>
       <Progress
         type="circle"

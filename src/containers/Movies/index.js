@@ -207,7 +207,11 @@ function Movies() {
                           : false
                       }
                       key={item?.id}
-                      img={item?.poster_path}
+                      img={
+                        item?.poster_path ??
+                        item?.backdrop_path ??
+                        item?.profile_path
+                      }
                       progress={item?.vote_average}
                       title={item?.title}
                       date={new Date(item?.release_date)

@@ -173,7 +173,6 @@ function MovieView(props) {
         value: `${value * 2}`,
       }
     );
-    console.log(data);
   };
 
   useEffect(() => {
