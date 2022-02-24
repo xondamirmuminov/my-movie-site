@@ -260,6 +260,10 @@ const StyledMovieDetails = styled.section`
       }
       p {
         font-size: 1.6rem;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 20px;
       }
       a {
         padding: 8px 16px;
