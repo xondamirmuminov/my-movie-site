@@ -61,6 +61,7 @@ const StyledCollection = styled.section`
       align-items: center;
       column-gap: 25px;
       border-radius: 8px;
+      box-shadow: 2px 2px 10px #393939;
       background: var(--bg-detail);
     }
     img {
