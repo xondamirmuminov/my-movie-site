@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import keys from "../../configs";
 import StyledCollection from "../../styles/pages/collection";
+import DefaultImage from "../../assets/image.svg";
 
 function Collection(props) {
   const [data, setData] = useState({});
@@ -44,11 +45,17 @@ function Collection(props) {
             <h2>{data?.parts?.length} movies</h2>
             <div className="card-inner">
               {data?.parts?.map((item) => (
-                <div className="card">
+                <div className="card" key={item.id}>
                   <Link to={`/movie/${item?.id}`}>
                     <img
-                      src={keys.IMG_URL + item?.poster_path}
-                      alt={item?.name ?? item?.name}
+                      src={
+                        item?.poster_path
+                          ? keys.IMG_URL + item.poster_path
+                          : item?.poster_path
+                          ? keys.IMG_URL + item?.backdrop_path
+                          : DefaultImage
+                      }
+                      alt={item?.title ?? item?.name}
                     />
                   </Link>
                   <div className="card__block">

@@ -211,6 +211,51 @@ const GlobalStyles = createGlobalStyle`
     .ant-popover-arrow-content {
         background-color: #000000b5;
     }
+    .ant-pagination {
+    margin: 40px 0;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .ant-pagination-item-active {
+    border-color: var(--red) !important;
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
+  .ant-pagination-item:hover {
+    border-color: var(--red) !important;
+    font-weight: bold;
+
+    a {
+      color: var(--red) !important;
+    }
+  }
+  .ant-pagination-jump-prev
+    .ant-pagination-item-container
+    .ant-pagination-item-ellipsis,
+  .ant-pagination-jump-next
+    .ant-pagination-item-container
+    .ant-pagination-item-ellipsis {
+    color: #ffffffd3;
+  }
+  .ant-pagination-prev:focus-visible .ant-pagination-item-link,
+  .ant-pagination-next:focus-visible .ant-pagination-item-link,
+  .ant-pagination-prev:hover .ant-pagination-item-link,
+  .ant-pagination-next:hover .ant-pagination-item-link {
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .ant-pagination-jump-prev
+    .ant-pagination-item-container
+    .ant-pagination-item-link-icon,
+  .ant-pagination-jump-next
+    .ant-pagination-item-container
+    .ant-pagination-item-link-icon {
+    color: var(--red);
+  }
+  .ant-pagination-item-active a {
+    color: var(--red) !important;
+  }
 `;
 
 export default GlobalStyles;
