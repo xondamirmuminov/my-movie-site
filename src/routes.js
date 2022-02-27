@@ -10,6 +10,7 @@ import TvCast from "./containers/TV/TvCast";
 import People from "./containers/People";
 import Collection from "./containers/Collection";
 import Network from "./containers/Network";
+import Keywords from "./containers/Keywords";
 
 export default [
   {
@@ -66,5 +67,10 @@ export default [
     path: "/networks/:id",
     component: Network,
     key: "networks",
+  },
+  {
+    path: "/keywords/:id",
+    component: Keywords,
+    key: "keywords",
   },
 ];

@@ -583,7 +583,11 @@ function TvView(props) {
                 <h3>Keywords</h3>
                 <div>
                   {keywords?.results?.map((item) => (
-                    <button key={item?.id}>{item?.name}</button>
+                    <Link to={`/keywords/${item?.id}`} key={item?.id}>
+                      <button style={{ color: "white", cursor: "pointer" }}>
+                        {item?.name}
+                      </button>
+                    </Link>
                   ))}
                 </div>
               </div>

@@ -61,6 +61,12 @@ const StyledNetwork = styled.section`
       h1 {
         margin: 0;
         color: white;
+        font-size: 34px;
+        font-weight: bold;
+      }
+      h2 {
+        margin: 0;
+        color: #fffffff0;
         font-size: 24px;
       }
     }

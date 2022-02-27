@@ -20,6 +20,7 @@ import {
   BsLink,
 } from "react-icons/all";
 import Avatar from "../../assets/avatar-icon-images-4.jpg";
+import DefaultImage from "../../assets/image.svg";
 import ModalMovie from "./ModalMovie";
 import Slider from "react-slick";
 
@@ -239,7 +240,13 @@ function MovieView(props) {
             <Image
               width={300}
               height={450}
-              src={`${keys.IMG_URL + state?.poster_path}`}
+              src={
+                state?.poster_path
+                  ? keys.IMG_URL + state?.poster_path
+                  : state?.backdrop_path
+                  ? keys.IMG_URL + state?.backdrop_path
+                  : DefaultImage
+              }
             />
             <div className="home__block">
               <h2 className="home__title">
@@ -573,7 +580,11 @@ function MovieView(props) {
                 <h3>Keywords</h3>
                 <div>
                   {keywords?.keywords?.map((item) => (
-                    <button key={item?.id}>{item?.name}</button>
+                    <Link to={`/keywords/${item?.id}`} key={item?.id}>
+                      <button style={{ color: "white", cursor: "pointer" }}>
+                        {item?.name}
+                      </button>
+                    </Link>
                   ))}
                 </div>
               </div>
