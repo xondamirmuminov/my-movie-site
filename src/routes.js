@@ -11,6 +11,7 @@ import People from "./containers/People";
 import Collection from "./containers/Collection";
 import Network from "./containers/Network";
 import Keywords from "./containers/Keywords";
+import Profile from "./containers/Profile";
 
 export default [
   {
@@ -72,5 +73,10 @@ export default [
     path: "/keywords/:id",
     component: Keywords,
     key: "keywords",
+  },
+  {
+    path: "/profile",
+    component: Profile,
+    key: "profile",
   },
 ];

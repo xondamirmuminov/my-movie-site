@@ -225,6 +225,10 @@ function MovieView(props) {
     progressPercent = progressPercent + "0";
   }
 
+  if (progressPercent == "10") {
+    progressPercent = progressPercent + "0";
+  }
+
   return (
     <StyledMovieDetails
       bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
@@ -284,6 +288,7 @@ function MovieView(props) {
               <div className="home__inner-score">
                 <Progress
                   type="circle"
+                  status="active"
                   percent={progressPercent}
                   width={68}
                   trailColor={`${
@@ -506,6 +511,7 @@ function MovieView(props) {
                             </h2>
                             <Progress
                               type="circle"
+                              status="active"
                               percent={progressItemPercent}
                               width={40}
                               trailColor={`${

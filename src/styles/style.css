@@ -16,7 +16,8 @@ html {
 }
 
 :root {
-  --red: #ff0000;
+  --red: #cd0000;
+  --dark-red: #b50000;
   --bg: #18191c;
   --bg-detail: #1d1e22;
   --white: #fff;
@@ -47,6 +48,15 @@ input[type="number"] {
 
 .ant-progress-text {
   color: white !important;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: var(--dark-red) !important;
+}
+
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+  background-color: var(--dark-red) !important;
 }
 
 @media screen and (max-width: 768px) {

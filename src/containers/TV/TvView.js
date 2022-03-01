@@ -227,6 +227,10 @@ function TvView(props) {
     progressPercent = progressPercent + "0";
   }
 
+  if (progressPercent == "10") {
+    progressPercent = progressPercent + "0";
+  }
+
   return (
     <StyledMovieDetails
       bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
@@ -281,6 +285,7 @@ function TvView(props) {
                 <Progress
                   type="circle"
                   percent={progressPercent}
+                  status="active"
                   width={68}
                   trailColor={`${
                     state?.vote_average < 4
@@ -500,6 +505,7 @@ function TvView(props) {
                             </h2>
                             <Progress
                               type="circle"
+                              status="active"
                               percent={progressItemPercent}
                               width={40}
                               trailColor={`${

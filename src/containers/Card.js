@@ -32,6 +32,10 @@ function Card({ img, title, date, progress, id, mediaType }) {
     progressPercent = progressPercent + "0";
   }
 
+  if (progressPercent == "10") {
+    progressPercent = progressPercent + "0";
+  }
+
   const fetchAccount = async () => {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
@@ -160,6 +164,7 @@ function Card({ img, title, date, progress, id, mediaType }) {
         type="circle"
         percent={progressPercent}
         width={50}
+        status="active"
         trailColor={`${
           progress < 4
             ? "#4F1533"
