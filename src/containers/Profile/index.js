@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Image, Avatar } from "antd";
+import { Image, Avatar, Tabs } from "antd";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import keys from "../../configs";
 import StyledProfile from "../../styles/pages/profile";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import DefaultImage from "../../assets/image.svg";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
+const { TabPane } = Tabs;
 function Profile() {
   const [data, setData] = useState({});
   const [favorites, setFavorites] = useState({});
@@ -59,33 +58,6 @@ function Profile() {
     fetchWatchlist();
   }, []);
 
-  const chartData = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "red",
-          "blue",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
   return (
     <StyledProfile>
       <div className="profile__home">
@@ -118,33 +90,85 @@ function Profile() {
           </div>
         </div>
       </div>
-      <div className="profile__stats">
+      <div className="profile__inner">
         <div className="container">
-          <h2>Stats</h2>
-          <div className="profile__stats-inner">
-            <div>
-              <p>Total Ratings</p>
-              <h2>{ratedMovies?.results?.length + ratedTv?.results?.length}</h2>
+          <div className="profile__stats">
+            <h2>Stats</h2>
+            <div className="profile__stats-inner">
+              <div>
+                <p>Total Ratings</p>
+                <h2>
+                  {ratedMovies?.results?.length + ratedTv?.results?.length}
+                </h2>
+              </div>
+              <div>
+                <p>Total Favourites</p>
+                <h2>
+                  {favorites?.results?.length + favoriteTv?.results?.length}
+                </h2>
+              </div>
+              <div>
+                <p>Total Watchlists</p>
+                <h2>
+                  {watchlistMovies?.results?.length +
+                    watchlistTv?.results?.length}
+                </h2>
+              </div>
             </div>
-            <div>
-              <p>Total Favourites</p>
-              <h2>
-                {favorites?.results?.length + favoriteTv?.results?.length}
-              </h2>
-            </div>
-            <div>
-              <p>Total Watchlists</p>
-              <h2>
-                {watchlistMovies?.results?.length +
-                  watchlistTv?.results?.length}
-              </h2>
-            </div>
-            <div width={400} height={400}>
-              <Doughnut
-                style={{ width: "100%", height: "100%" }}
-                data={chartData}
-              />
-            </div>
+          </div>
+          <div className="profile__body">
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Rating Movies" key="1">
+                <div className="card-inner">
+                  {ratedMovies?.results?.map((item) => (
+                    <div className="card" key={item.id}>
+                      <Link to={`/movie/${item?.id}`}>
+                        <img
+                          src={
+                            item?.poster_path
+                              ? keys.IMG_URL + item.poster_path
+                              : item?.poster_path
+                              ? keys.IMG_URL + item?.backdrop_path
+                              : DefaultImage
+                          }
+                          alt={item?.title ?? item?.name}
+                        />
+                      </Link>
+                      <div className="card__block">
+                        <h2>
+                          <Link to={`/movie/${item?.id}`}>
+                            {item?.name ?? item?.title}
+                          </Link>
+                        </h2>
+                        <p>
+                          {new Date(item?.release_date)
+                            .toUTCString()
+                            .split(" ")
+                            .slice(0, 4)
+                            .join(" ")}
+                        </p>
+                        <p className="card__text">{item?.overview}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </TabPane>
+              <TabPane tab="Rating TV Shows" key="2">
+                Content of Tab Pane 2
+              </TabPane>
+              <TabPane tab="Favourite Movies" key="3">
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane tab="Favourite TV Shows" key="4">
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane tab="Movies Watchlist" key="5">
+                Content of Tab Pane 3
+              </TabPane>
+              <TabPane tab="TV Show Watchlist" key="6">
+                Content of Tab Pane 3
+              </TabPane>
+            </Tabs>
           </div>
         </div>
       </div>
