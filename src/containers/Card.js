@@ -98,10 +98,6 @@ function Card({ img, title, date, progress, id, mediaType }) {
         )}
       </button>
       <div className={`${state.more ? "card__dropdown" : "none"}`}>
-        <div className="card__dropdown-item">
-          <RiMenuAddLine size={20} />
-          <p>Add to list</p>
-        </div>
         <div
           className="card__dropdown-item"
           onClick={() => {

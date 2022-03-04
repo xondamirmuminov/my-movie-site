@@ -61,7 +61,7 @@ function Profile() {
   return (
     <StyledProfile>
       <div className="profile__home">
-        <div className="container">
+        <div className="container home-inner">
           {data?.avatar?.tmdb?.avatar_path ? (
             <Image
               width={150}
@@ -90,86 +90,244 @@ function Profile() {
           </div>
         </div>
       </div>
-      <div className="profile__inner">
-        <div className="container">
-          <div className="profile__stats">
-            <h2>Stats</h2>
-            <div className="profile__stats-inner">
-              <div>
-                <p>Total Ratings</p>
-                <h2>
-                  {ratedMovies?.results?.length + ratedTv?.results?.length}
-                </h2>
-              </div>
-              <div>
-                <p>Total Favourites</p>
-                <h2>
-                  {favorites?.results?.length + favoriteTv?.results?.length}
-                </h2>
-              </div>
-              <div>
-                <p>Total Watchlists</p>
-                <h2>
-                  {watchlistMovies?.results?.length +
-                    watchlistTv?.results?.length}
-                </h2>
-              </div>
+      <div className="profile__stats">
+        <div className="container stats-inner">
+          <h2>Stats</h2>
+          <div className="profile__stats-inner">
+            <div>
+              <p>Total Ratings</p>
+              <h2>{ratedMovies?.results?.length + ratedTv?.results?.length}</h2>
+            </div>
+            <div>
+              <p>Total Favourites</p>
+              <h2>
+                {favorites?.results?.length + favoriteTv?.results?.length}
+              </h2>
+            </div>
+            <div>
+              <p>Total Watchlists</p>
+              <h2>
+                {watchlistMovies?.results?.length +
+                  watchlistTv?.results?.length}
+              </h2>
             </div>
           </div>
-          <div className="profile__body">
-            <Tabs defaultActiveKey="1">
-              <TabPane tab="Rating Movies" key="1">
-                <div className="card-inner">
-                  {ratedMovies?.results?.map((item) => (
-                    <div className="card" key={item.id}>
-                      <Link to={`/movie/${item?.id}`}>
-                        <img
-                          src={
-                            item?.poster_path
-                              ? keys.IMG_URL + item.poster_path
-                              : item?.poster_path
-                              ? keys.IMG_URL + item?.backdrop_path
-                              : DefaultImage
-                          }
-                          alt={item?.title ?? item?.name}
-                        />
-                      </Link>
-                      <div className="card__block">
-                        <h2>
-                          <Link to={`/movie/${item?.id}`}>
-                            {item?.name ?? item?.title}
-                          </Link>
-                        </h2>
-                        <p>
-                          {new Date(item?.release_date)
-                            .toUTCString()
-                            .split(" ")
-                            .slice(0, 4)
-                            .join(" ")}
-                        </p>
-                        <p className="card__text">{item?.overview}</p>
-                      </div>
+        </div>
+      </div>
+      <div className="profile__body">
+        <div className="container body-inner">
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="Rating Movies" key="1">
+              <div className="card-inner">
+                {ratedMovies?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/movie/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
                     </div>
-                  ))}
-                </div>
-              </TabPane>
-              <TabPane tab="Rating TV Shows" key="2">
-                Content of Tab Pane 2
-              </TabPane>
-              <TabPane tab="Favourite Movies" key="3">
-                Content of Tab Pane 3
-              </TabPane>
-              <TabPane tab="Favourite TV Shows" key="4">
-                Content of Tab Pane 3
-              </TabPane>
-              <TabPane tab="Movies Watchlist" key="5">
-                Content of Tab Pane 3
-              </TabPane>
-              <TabPane tab="TV Show Watchlist" key="6">
-                Content of Tab Pane 3
-              </TabPane>
-            </Tabs>
-          </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+            <TabPane tab="Rating TV Shows" key="2">
+              <div className="card-inner">
+                {ratedTv?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/tv/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/tv/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.first_air_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+            <TabPane tab="Favourite Movies" key="3">
+              <div className="card-inner">
+                {favorites?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/movie/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+            <TabPane tab="Favourite TV Shows" key="4">
+              <div className="card-inner">
+                {favoriteTv?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/tv/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/tv/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.first_air_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+            <TabPane tab="Movies Watchlist" key="5">
+              <div className="card-inner">
+                {watchlistMovies?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/movie/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/movie/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.release_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+            <TabPane tab="TV Show Watchlist" key="6">
+              <div className="card-inner">
+                {watchlistTv?.results?.map((item) => (
+                  <div className="card" key={item.id}>
+                    <Link to={`/tv/${item?.id}`}>
+                      <img
+                        src={
+                          item?.poster_path
+                            ? keys.IMG_URL + item.poster_path
+                            : item?.poster_path
+                            ? keys.IMG_URL + item?.backdrop_path
+                            : DefaultImage
+                        }
+                        alt={item?.title ?? item?.name}
+                      />
+                    </Link>
+                    <div className="card__block">
+                      <h2>
+                        <Link to={`/tv/${item?.id}`}>
+                          {item?.name ?? item?.title}
+                        </Link>
+                      </h2>
+                      <p>
+                        {new Date(item?.first_air_date)
+                          .toUTCString()
+                          .split(" ")
+                          .slice(0, 4)
+                          .join(" ")}
+                      </p>
+                      <p className="card__text">{item?.overview}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     </StyledProfile>

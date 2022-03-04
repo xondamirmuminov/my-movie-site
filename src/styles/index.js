@@ -159,15 +159,15 @@ const GlobalStyles = createGlobalStyle`
         background: #f1f1f1;
         border-radius: 6px; 
     }
-                
+    
     &::-webkit-scrollbar-thumb {
         background: #888; 
-        border-radius: 6px; 
+        border-radius: 0 0 6px 6px; 
     }
-                
+    
     &::-webkit-scrollbar-thumb:hover {
         background: #555; 
-        border-radius: 6px; 
+        border-radius: 0 0 6px 6px; 
     }
     .movie__switch {
         display: flex;

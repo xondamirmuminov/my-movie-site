@@ -308,9 +308,6 @@ function TvView(props) {
                 />
                 <span>User Score</span>
                 <div className="home__inner-btn">
-                  <button>
-                    <RiMenuAddLine size={20} color="white" />
-                  </button>
                   <button
                     onClick={() => {
                       setFavorite(!favorite);
