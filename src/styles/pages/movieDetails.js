@@ -404,6 +404,50 @@ const StyledMovieDetails = styled.section`
       }
     }
   }
+  @media (max-width: 910px) {
+    .home {
+      .container {
+        height: auto;
+        padding: 40px 0;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .ant-image {
+          width: 55% !important;
+          margin-bottom: 20px;
+
+          img {
+            object-fit: cover;
+          }
+        }
+      }
+      .home__inner-date,
+      .home__inner-score,
+      .home__jobs {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+  }
+  @media (max-width: 706px) {
+    .body__block--sm {
+      border-left: 0;
+
+      .social {
+        justify-content: center;
+      }
+      .about {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        div {
+          justify-content: center;
+        }
+      }
+    }
+  }
 `;
 
 export default StyledMovieDetails;
