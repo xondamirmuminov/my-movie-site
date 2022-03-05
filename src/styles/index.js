@@ -171,10 +171,13 @@ const GlobalStyles = createGlobalStyle`
     }
     .movie__switch {
         display: flex;
+        align-items: center;
         column-gap: 20px;
         margin-bottom: 30px;
 
         h2 {
+            margin: 0;
+            font-size: 2.4rem;
             color: white;
         }
         .react-switch-selector-wrapper {

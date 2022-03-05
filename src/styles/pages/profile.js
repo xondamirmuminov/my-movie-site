@@ -31,7 +31,7 @@ const StyledProfile = styled.section`
     padding: 40px 0;
 
     h2 {
-      font-size: 24px;
+      font-size: 2.4rem;
       color: white;
     }
     .profile__stats-inner {
@@ -40,10 +40,10 @@ const StyledProfile = styled.section`
 
       p {
         margin: 0;
-        font-size: 17px;
+        font-size: 1.7rem;
       }
       h2 {
-        font-size: 50px;
+        font-size: 5rem;
         font-weight: bold;
         color: var(--red);
       }

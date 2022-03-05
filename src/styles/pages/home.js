@@ -42,6 +42,11 @@ const StyledHome = styled.section`
       width: 100%;
     }
   }
+  @media (max-width: 458px) {
+    .home__inner {
+      width: 100%;
+    }
+  }
 `;
 
 export default StyledHome;

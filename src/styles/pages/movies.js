@@ -10,7 +10,7 @@ const StyledMovies = styled.section`
     margin: auto;
     column-gap: 15px;
     padding: 32px;
-    transform: translate(0, -70px);
+    transform: translate(0, -55px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,6 +47,11 @@ const StyledMovies = styled.section`
     flex-wrap: wrap;
     column-gap: 20px;
     row-gap: 20px;
+  }
+  @media (max-width: 360px) {
+    .movie__search {
+      padding: 10px;
+    }
   }
 `;
 
