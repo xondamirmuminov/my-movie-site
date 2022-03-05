@@ -22,7 +22,7 @@ const StyledProfile = styled.section`
       column-gap: 40px;
     }
     h1 {
-      font-size: 32px;
+      font-size: 3.2rem;
       font-weight: bold;
       color: white;
     }
@@ -36,6 +36,8 @@ const StyledProfile = styled.section`
     }
     .profile__stats-inner {
       display: flex;
+      flex-wrap: wrap;
+      column-gap: 15px;
       justify-content: space-between;
 
       p {
@@ -66,12 +68,16 @@ const StyledProfile = styled.section`
       box-shadow: 2px 2px 10px #393939;
       background: var(--bg-detail);
     }
+    .card__block {
+      padding-right: 10px;
+    }
     img {
       width: 133px;
       border-radius: 8px 0 0 8px;
     }
     h2 {
       margin-bottom: 5px;
+      font-size: 2.2rem;
     }
     a {
       color: white;
@@ -79,8 +85,9 @@ const StyledProfile = styled.section`
     p {
       color: #ffffffb3;
     }
-    .card__block {
-      padding-right: 10px;
+    .card__text {
+      max-height: 90px;
+      overflow-y: hidden;
     }
   }
   .ant-tabs-tab-btn {
@@ -91,6 +98,17 @@ const StyledProfile = styled.section`
   }
   .ant-tabs-ink-bar {
     background: var(--red);
+  }
+  .anticon-ellipsis {
+    svg {
+      color: white;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .card__text {
+      max-height: 60px !important;
+    }
   }
 `;
 

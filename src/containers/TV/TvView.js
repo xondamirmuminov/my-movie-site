@@ -394,7 +394,7 @@ function TvView(props) {
                     </Link>
                     <div className="card__body">
                       <h3 className="card__title">
-                        <Link to={`/peson/${item.id}`}>{item?.name}</Link>
+                        <Link to={`/person/${item.id}`}>{item?.name}</Link>
                       </h3>
                       <p className="card__text">{item?.character}</p>
                     </div>

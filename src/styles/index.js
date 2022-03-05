@@ -162,12 +162,12 @@ const GlobalStyles = createGlobalStyle`
     
     &::-webkit-scrollbar-thumb {
         background: #888; 
-        border-radius: 0 0 6px 6px; 
+        border-radius: 0; 
     }
     
     &::-webkit-scrollbar-thumb:hover {
         background: #555; 
-        border-radius: 0 0 6px 6px; 
+        border-radius: 0; 
     }
     .movie__switch {
         display: flex;
