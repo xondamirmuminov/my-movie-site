@@ -3,7 +3,7 @@ import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Layout, Menu, Avatar } from "antd";
 import routes from "./routes";
-import Netflix from "./assets/Netflix-Logo.wine (1).svg";
+import Logo from "./assets/logo.svg";
 import Spinner from "./components/Spinner";
 import keys from "./configs";
 import axios from "axios";
@@ -38,7 +38,7 @@ function App() {
             }}
           >
             <Link to="/">
-              <img width={100} src={Netflix} alt="logo" />
+              <img width={180} src={Logo} alt="logo" />
             </Link>
             <Menu
               style={{ width: "50%", justifyContent: "flex-end" }}
