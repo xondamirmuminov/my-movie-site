@@ -415,9 +415,11 @@ const StyledMovieDetails = styled.section`
 
         .ant-image {
           width: 55% !important;
+          height: 280px !important;
           margin-bottom: 20px;
 
           img {
+            height: 280px !important;
             object-fit: cover;
           }
         }
@@ -431,6 +433,9 @@ const StyledMovieDetails = styled.section`
     }
   }
   @media (max-width: 706px) {
+    .home {
+      background-position: center;
+    }
     .body__block--sm {
       border-left: 0;
 

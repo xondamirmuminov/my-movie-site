@@ -259,6 +259,20 @@ const GlobalStyles = createGlobalStyle`
   .ant-pagination-item-active a {
     color: var(--red) !important;
   }
+  .ant-tabs-tab-btn {
+    color: #f0f0f0e6;
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--red);
+  }
+  .ant-tabs-ink-bar {
+    background: var(--red);
+  }
+  .anticon-ellipsis {
+    svg {
+      color: white;
+    }
+  }
 `;
 
 export default GlobalStyles;

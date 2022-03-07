@@ -25,6 +25,7 @@ const StyledMovie = styled.section`
     }
     button {
       width: 18.5%;
+      padding-right: 15px;
       display: flex;
       align-items: center;
       justify-content: center;

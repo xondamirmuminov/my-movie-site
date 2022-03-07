@@ -90,20 +90,6 @@ const StyledProfile = styled.section`
       overflow-y: hidden;
     }
   }
-  .ant-tabs-tab-btn {
-    color: #f0f0f0e6;
-  }
-  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: var(--red);
-  }
-  .ant-tabs-ink-bar {
-    background: var(--red);
-  }
-  .anticon-ellipsis {
-    svg {
-      color: white;
-    }
-  }
 
   @media (max-width: 380px) {
     .card__text {
