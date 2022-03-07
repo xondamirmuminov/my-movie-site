@@ -16,10 +16,13 @@ const StyledCollection = styled.section`
     background-size: cover;
 
     .container {
-      height: 60vh;
+      min-height: 60vh;
+      padding-top: 40px;
+      padding-bottom: 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       column-gap: 40px;
     }
     .ant-image-img {
@@ -73,6 +76,18 @@ const StyledCollection = styled.section`
     }
     a {
       color: white;
+    }
+  }
+  @media (max-width: 670px) {
+    .collection__home {
+      text-align: center;
+      .container {
+        flex-direction: column;
+
+        .collection__home-block {
+          margin-top: 20px;
+        }
+      }
     }
   }
 `;
