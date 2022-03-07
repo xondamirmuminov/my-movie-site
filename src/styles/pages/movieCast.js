@@ -78,6 +78,18 @@ const StyledCast = styled.section`
       }
     }
   }
+  @media (max-width: 560px) {
+    .movie-inner {
+      justify-content: center;
+      text-align: center;
+
+      .movie__link {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 `;
 
 export default StyledCast;
