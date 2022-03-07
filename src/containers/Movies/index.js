@@ -201,8 +201,8 @@ function Movies() {
                     <Card
                       mediaType={item?.media_type}
                       like={
-                        state.favourite.find((i) => i?.id == item?.id) ||
-                        state.favouriteMovie.find((i) => i?.id == item?.id)
+                        state?.favourite?.find((i) => i?.id == item?.id) ||
+                        state?.favouriteMovie?.find((i) => i?.id == item?.id)
                           ? true
                           : false
                       }
@@ -240,12 +240,12 @@ function Movies() {
               </div>
               <Slider {...settings}>
                 {tabName == "ontv"
-                  ? state.tv.map((item) => (
+                  ? state?.tv?.map((item) => (
                       <Card
                         mediaType={"tv"}
                         like={
-                          state.favourite.find((i) => i?.id == item?.id) ||
-                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                          state?.favourite?.find((i) => i?.id == item?.id) ||
+                          state?.favouriteMovie?.find((i) => i?.id == item?.id)
                             ? true
                             : false
                         }
@@ -254,19 +254,19 @@ function Movies() {
                         progress={item?.vote_average}
                         title={item?.name}
                         date={new Date(item?.first_air_date)
-                          .toUTCString()
-                          .split(" ")
-                          .slice(0, 4)
-                          .join(" ")}
+                          ?.toUTCString()
+                          ?.split(" ")
+                          ?.slice(0, 4)
+                          ?.join(" ")}
                         id={item?.id}
                       />
                     ))
-                  : state.theaters.map((item) => (
+                  : state?.theaters?.map((item) => (
                       <Card
                         mediaType={"movie"}
                         like={
-                          state.favourite.find((i) => i?.id == item?.id) ||
-                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                          state?.favourite?.find((i) => i?.id == item?.id) ||
+                          state?.favouriteMovie?.find((i) => i?.id == item?.id)
                             ? true
                             : false
                         }
@@ -275,10 +275,10 @@ function Movies() {
                         progress={item?.vote_average}
                         title={item?.title}
                         date={new Date(item?.release_date)
-                          .toUTCString()
-                          .split(" ")
-                          .slice(0, 4)
-                          .join(" ")}
+                          ?.toUTCString()
+                          ?.split(" ")
+                          ?.slice(0, 4)
+                          ?.join(" ")}
                         id={item?.id}
                       />
                     ))}
@@ -296,12 +296,12 @@ function Movies() {
               </div>
               <Slider style={{ marginTop: "20px" }} {...settings}>
                 {trend == "day"
-                  ? state.day.map((item) => (
+                  ? state?.day?.map((item) => (
                       <Card
                         mediaType={item?.media_type}
                         like={
-                          state.favourite.find((i) => i?.id == item?.id) ||
-                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                          state?.favourite?.find((i) => i?.id == item?.id) ||
+                          state?.favouriteMovie?.find((i) => i?.id == item?.id)
                             ? true
                             : false
                         }
@@ -310,19 +310,19 @@ function Movies() {
                         progress={item?.vote_average}
                         title={item?.title}
                         date={new Date(item?.release_date)
-                          .toUTCString()
-                          .split(" ")
-                          .slice(0, 4)
-                          .join(" ")}
+                          ?.toUTCString()
+                          ?.split(" ")
+                          ?.slice(0, 4)
+                          ?.join(" ")}
                         id={item?.id}
                       />
                     ))
-                  : state.week.map((item) => (
+                  : state?.week?.map((item) => (
                       <Card
                         mediaType={item?.media_type}
                         like={
-                          state.favourite.find((i) => i?.id == item?.id) ||
-                          state.favouriteMovie.find((i) => i?.id == item?.id)
+                          state?.favourite?.find((i) => i?.id == item?.id) ||
+                          state?.favouriteMovie?.find((i) => i?.id == item?.id)
                             ? true
                             : false
                         }
@@ -331,10 +331,10 @@ function Movies() {
                         progress={item?.vote_average}
                         title={item?.title}
                         date={new Date(item?.release_date)
-                          .toUTCString()
-                          .split(" ")
-                          .slice(0, 4)
-                          .join(" ")}
+                          ?.toUTCString()
+                          ?.split(" ")
+                          ?.slice(0, 4)
+                          ?.join(" ")}
                         id={item?.id}
                       />
                     ))}
