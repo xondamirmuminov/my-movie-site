@@ -3,12 +3,12 @@ import keys from "../configs";
 import store from "../store";
 import { loading } from "../store/actions";
 
-const baseURL = keys.BACKEND_API;
-const axios = Axios.create({
-  baseURL: "https://api.themoviedb.org/3/",
-  withCredentials: true,
-  timeout: 20000,
-});
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? keys.BACKEND_API
+    : "https://api.themoviedb.org/3/";
+
+const axios = Axios.create({ baseURL, withCredentials: true, timeout: 20000 });
 
 export function sendQuery(url) {
   return axios
