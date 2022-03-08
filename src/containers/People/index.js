@@ -51,8 +51,6 @@ function People() {
     fetchData();
   }, []);
 
-  console.log(data);
-
   return (
     <StyledMovie>
       <div className="container">

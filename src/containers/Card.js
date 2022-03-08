@@ -136,7 +136,6 @@ function Card({ img, title, date, progress, id, mediaType }) {
             />
           }
           trigger="click"
-          style={{ backgroundColor: "#001529" }}
           style={{ backgroundColor: "var(--bg-detail)" }}
         >
           <div className="card__dropdown-item">

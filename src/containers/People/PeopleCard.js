@@ -14,7 +14,7 @@ function PeopleCard({ img, name, known_for, id }) {
           <h2 className="card__title">{name}</h2>
         </Link>
         <p className="card__genre">
-          {known_for.map((item) => item.title ?? item?.name + ", ")}
+          {known_for?.map((item) => item?.title ?? item?.name + ", ")}
         </p>
       </div>
     </StyledCard>

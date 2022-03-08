@@ -295,7 +295,7 @@ function Profile() {
             <TabPane tab="TV Show Watchlist" key="6">
               <div className="card-inner">
                 {watchlistTv?.results?.map((item) => (
-                  <div className="card" key={item.id}>
+                  <div className="card" key={item?.id}>
                     <Link to={`/tv/${item?.id}`}>
                       <img
                         src={

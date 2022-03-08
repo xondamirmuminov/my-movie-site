@@ -121,7 +121,7 @@ function Person(props) {
                   <h3>
                     {credit?.deathday}{" "}
                     {`(${
-                      credit?.deathday.split("-")[0] -
+                      credit?.deathday?.split("-")[0] -
                       credit?.birthday?.split("-")[0]
                     } years old)`}
                   </h3>
@@ -196,7 +196,7 @@ function Person(props) {
             <h2 className="acting-title">Production</h2>
             <div className="acting">
               {credits?.crew
-                ?.filter((item) => item.department === "Production")
+                ?.filter((item) => item?.department === "Production")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
                     <Link to={`/movie/${item?.id}`}>
@@ -225,7 +225,7 @@ function Person(props) {
             <h2 className="acting-title">Crew</h2>
             <div className="acting">
               {credits?.crew
-                ?.filter((item) => item.department === "Crew")
+                ?.filter((item) => item?.department === "Crew")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
                     <Link to={`/movie/${item?.id}`}>
@@ -254,7 +254,7 @@ function Person(props) {
             <h2 className="acting-title">Directing</h2>
             <div className="acting">
               {credits?.crew
-                ?.filter((item) => item.department === "Directing")
+                ?.filter((item) => item?.department === "Directing")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
                     <Link to={`/movie/${item?.id}`}>

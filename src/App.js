@@ -83,12 +83,12 @@ function App() {
           <Content>
             <div className="site-layout-content">
               <Switch>
-                {routes.map((item) => (
+                {routes?.map((item) => (
                   <Route
                     exact={true}
-                    key={item.key}
-                    path={item.path}
-                    component={item.component}
+                    key={item?.key}
+                    path={item?.path}
+                    component={item?.component}
                   />
                 ))}
               </Switch>

@@ -7,20 +7,17 @@ import { Link } from "react-router-dom";
 import Movies from "../Movies";
 
 function Home() {
-  const [state, setState] = useState({
-    popular: [],
-    trending: [],
-  });
+  const [popular, setPopular] = useState([]);
+  const [trending, setTrending] = useState([]);
 
   const fetchPopularMovie = async () => {
     const data = await sendQuery(Urls.POPULAR_MOVIES);
-    setState((state) => ({ ...state, popular: [...data.results] }));
+    setPopular([...data?.results]);
   };
 
   const fetchTrendingMovie = async () => {
     const data = await sendQuery(Urls.TRENDING);
-    console.log(data);
-    setState((state) => ({ ...state, trending: [...data.results] }));
+    setTrending([...data?.results]);
   };
 
   useEffect(() => {
@@ -30,14 +27,12 @@ function Home() {
 
   return (
     <>
-      <StyledHome
-        bg={state.trending[0]?.backdrop_path ?? state.trending[0]?.poster_path}
-      >
+      <StyledHome bg={trending[0]?.backdrop_path ?? trending[0]?.poster_path}>
         <div className="container">
           <div className="home__inner">
-            <h1 className="home__title">{state.trending[0]?.title}</h1>
-            <p className="home__text">{state.trending[0]?.overview}</p>
-            <Link to={`/movie/${state.trending[0]?.id}`} className="home__btn">
+            <h1 className="home__title">{trending[0]?.title}</h1>
+            <p className="home__text">{trending[0]?.overview}</p>
+            <Link to={`/movie/${trending[0]?.id}`} className="home__btn">
               View More
             </Link>
           </div>

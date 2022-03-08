@@ -337,7 +337,6 @@ function TvView(props) {
                       />
                     }
                     trigger="click"
-                    style={{ backgroundColor: "#001529" }}
                     style={{ backgroundColor: "var(--bg-detail)" }}
                   >
                     <button>
@@ -356,7 +355,7 @@ function TvView(props) {
               </div>
               <div className="home__jobs">
                 {credits?.crew
-                  ?.filter((item) => item.job == "Director")
+                  ?.filter((item) => item?.job == "Director")
                   .map((item) => (
                     <div key={item?.id}>
                       <h3>
@@ -381,7 +380,7 @@ function TvView(props) {
               <div className="card-inner">
                 {popularCredit?.map((item) => (
                   <div key={item?.id} className="card">
-                    <Link to={`/person/${item.id}`}>
+                    <Link to={`/person/${item?.id}`}>
                       <img
                         src={
                           item?.profile_path
@@ -394,7 +393,7 @@ function TvView(props) {
                     </Link>
                     <div className="card__body">
                       <h3 className="card__title">
-                        <Link to={`/person/${item.id}`}>{item?.name}</Link>
+                        <Link to={`/person/${item?.id}`}>{item?.name}</Link>
                       </h3>
                       <p className="card__text">{item?.character}</p>
                     </div>

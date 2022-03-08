@@ -69,7 +69,7 @@ function TvCast(props) {
             </h3>
             {data?.cast?.map((item) => (
               <div key={item?.id} className="cast__card">
-                <Link to={`/person/${item.id}`}>
+                <Link to={`/person/${item?.id}`}>
                   <img
                     src={
                       item?.profile_path
@@ -81,7 +81,7 @@ function TvCast(props) {
                 </Link>
                 <div>
                   <h4>
-                    <Link to={`/person/${item.id}`}>{item?.name}</Link>
+                    <Link to={`/person/${item?.id}`}>{item?.name}</Link>
                   </h4>
                   <p>{item?.character}</p>
                 </div>
@@ -94,7 +94,7 @@ function TvCast(props) {
             </h3>
             {data?.crew?.map((item) => (
               <div key={item?.id} className="cast__card">
-                <Link to={`/person/${item.id}`}>
+                <Link to={`/person/${item?.id}`}>
                   <img
                     src={
                       item?.profile_path
@@ -106,7 +106,7 @@ function TvCast(props) {
                 </Link>
                 <div>
                   <h4>
-                    <Link to={`/person/${item.id}`}>{item?.name}</Link>
+                    <Link to={`/person/${item?.id}`}>{item?.name}</Link>
                   </h4>
                   <p>{item?.job}</p>
                 </div>

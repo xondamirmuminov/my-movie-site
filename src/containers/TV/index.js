@@ -72,12 +72,6 @@ function TV() {
             {data?.results?.map((item) => (
               <Card
                 mediaType={"tv"}
-                // like={
-                //   state.favourite.find((i) => i?.id == item?.id) ||
-                //   state.favouriteMovie.find((i) => i?.id == item?.id)
-                //     ? true
-                //     : false
-                // }
                 key={item?.id}
                 img={item?.poster_path}
                 progress={item?.vote_average}

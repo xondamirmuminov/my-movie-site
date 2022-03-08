@@ -53,12 +53,12 @@ function Keywords(props) {
         <div className="container">
           <div className="network__movies-inner">
             {movies?.results?.map((item) => (
-              <div className="card" key={item.id}>
+              <div className="card" key={item?.id}>
                 <Link to={`/movie/${item?.id}`}>
                   <img
                     src={
                       item?.poster_path
-                        ? keys.IMG_URL + item.poster_path
+                        ? keys.IMG_URL + item?.poster_path
                         : item?.poster_path
                         ? keys.IMG_URL + item?.backdrop_path
                         : DefaultImage

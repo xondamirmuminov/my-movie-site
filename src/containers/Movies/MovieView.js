@@ -131,7 +131,6 @@ function MovieView(props) {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/external_ids?api_key=${keys.API_KEY}`
     );
-    console.log(data);
     setSocial(data);
   };
 
@@ -275,7 +274,7 @@ function MovieView(props) {
                 ))}
                 <div className="home__inner-link">
                   {state?.genres?.map((item, index, arr) => (
-                    <Link key={item.id} to={`/${item?.name.toLowerCase()}`}>
+                    <Link key={item?.id} to={`/${item?.name?.toLowerCase()}`}>
                       {item.name}
                       {arr[arr.length - 1] ? ", " : ""}
                     </Link>
@@ -341,7 +340,6 @@ function MovieView(props) {
                       />
                     }
                     trigger="click"
-                    style={{ backgroundColor: "#001529" }}
                     style={{ backgroundColor: "var(--bg-detail)" }}
                   >
                     <button>
@@ -360,7 +358,7 @@ function MovieView(props) {
               </div>
               <div className="home__jobs">
                 {credits?.crew
-                  ?.filter((item) => item.job == "Director")
+                  ?.filter((item) => item?.job == "Director")
                   .map((item) => (
                     <div key={item?.id}>
                       <h3>
@@ -385,7 +383,7 @@ function MovieView(props) {
               <div className="card-inner">
                 {popularCredit?.map((item) => (
                   <div key={item?.id} className="card">
-                    <Link to={`/person/${item.id}`}>
+                    <Link to={`/person/${item?.id}`}>
                       <img
                         src={
                           item?.profile_path
@@ -398,7 +396,7 @@ function MovieView(props) {
                     </Link>
                     <div className="card__body">
                       <h3 className="card__title">
-                        <Link to={`/person/${item.id}`}>{item?.name}</Link>
+                        <Link to={`/person/${item?.id}`}>{item?.name}</Link>
                       </h3>
                       <p className="card__text">{item?.character}</p>
                     </div>

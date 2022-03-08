@@ -71,25 +71,21 @@ function Movies() {
 
   const fetchTheaters = async () => {
     const result = await sendQuery(Urls.NOW_PLAYING);
-    console.log(result);
     setState((state) => ({ ...state, theaters: result?.results }));
   };
 
   const fetchTV = async () => {
     const result = await sendQuery(Urls.TV_POPULAR);
-    console.log(result);
     setState((state) => ({ ...state, tv: result?.results }));
   };
 
   const fetchTrendingDay = async () => {
     const result = await sendQuery(Urls.TRENDING);
-    console.log(result);
     setState((state) => ({ ...state, day: result?.results }));
   };
 
   const fetchTrendingWeek = async () => {
     const result = await sendQuery(Urls.TRENDING_WEEK);
-    console.log(result);
     setState((state) => ({ ...state, week: result?.results }));
   };
 
@@ -97,14 +93,14 @@ function Movies() {
     const { data } = await axios.get(
       "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/tv?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
     );
-    setState((state) => ({ ...state, favourite: data.results }));
+    setState((state) => ({ ...state, favourite: data?.results }));
   };
 
   const fetchFavouriteMovies = async () => {
     const { data } = await axios.get(
       "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/movies?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
     );
-    setState((state) => ({ ...state, favouriteMovie: data.results }));
+    setState((state) => ({ ...state, favouriteMovie: data?.results }));
   };
 
   const handleSearchInputChange = (e) => {
@@ -165,8 +161,8 @@ function Movies() {
     fetchFavouriteMovies();
   }, []);
 
-  const initialSelectedIndex = options.findIndex(({ value }) => value === "");
-  const initialSelectedTrendIndex = trendOptions.findIndex(
+  const initialSelectedIndex = options?.findIndex(({ value }) => value === "");
+  const initialSelectedTrendIndex = trendOptions?.findIndex(
     ({ value }) => value === ""
   );
   return (
@@ -215,10 +211,10 @@ function Movies() {
                       progress={item?.vote_average}
                       title={item?.title}
                       date={new Date(item?.release_date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
+                        ?.toUTCString()
+                        ?.split(" ")
+                        ?.slice(0, 4)
+                        ?.join(" ")}
                       id={item?.id}
                     />
                   );

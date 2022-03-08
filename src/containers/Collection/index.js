@@ -45,12 +45,12 @@ function Collection(props) {
             <h2>{data?.parts?.length} movies</h2>
             <div className="card-inner">
               {data?.parts?.map((item) => (
-                <div className="card" key={item.id}>
+                <div className="card" key={item?.id}>
                   <Link to={`/movie/${item?.id}`}>
                     <img
                       src={
                         item?.poster_path
-                          ? keys.IMG_URL + item.poster_path
+                          ? keys.IMG_URL + item?.poster_path
                           : item?.poster_path
                           ? keys.IMG_URL + item?.backdrop_path
                           : DefaultImage
@@ -66,10 +66,10 @@ function Collection(props) {
                     </h2>
                     <p>
                       {new Date(item?.release_date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
+                        ?.toUTCString()
+                        ?.split(" ")
+                        ?.slice(0, 4)
+                        ?.join(" ")}
                     </p>
                   </div>
                 </div>

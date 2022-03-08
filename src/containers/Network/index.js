@@ -77,7 +77,7 @@ function Network(props) {
         <div className="container">
           <div className="network__movies-inner">
             {movies?.results?.map((item) => (
-              <div className="card" key={item.id}>
+              <div className="card" key={item?.id}>
                 <Link to={`/tv/${item?.id}`}>
                   <img
                     src={
@@ -98,10 +98,10 @@ function Network(props) {
                   </h2>
                   <p>
                     {new Date(item?.first_air_date)
-                      .toUTCString()
-                      .split(" ")
-                      .slice(0, 4)
-                      .join(" ")}
+                      ?.toUTCString()
+                      ?.split(" ")
+                      ?.slice(0, 4)
+                      ?.join(" ")}
                   </p>
                   <p className="card__text">{item?.overview}</p>
                 </div>
