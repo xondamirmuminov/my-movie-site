@@ -4,7 +4,11 @@ import store from "../store";
 import { loading } from "../store/actions";
 
 const baseURL = keys.BACKEND_API;
-const axios = Axios.create({ baseURL, withCredentials: true, timeout: 20000 });
+const axios = Axios.create({
+  baseURL: "https://api.themoviedb.org/3/",
+  withCredentials: true,
+  timeout: 20000,
+});
 
 export function sendQuery(url) {
   return axios
