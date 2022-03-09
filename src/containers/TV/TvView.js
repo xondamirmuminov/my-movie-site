@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Image, Tabs, Rate, Popover } from "antd";
@@ -26,7 +25,7 @@ import Slider from "react-slick";
 const { TabPane } = Tabs;
 
 function TvView(props) {
-  const [state, setState] = useState({});
+  const [data, setData] = useState({});
   const [credits, setCredits] = useState({});
   const [image, setImage] = useState({});
   const [video, setVideo] = useState({});
@@ -81,7 +80,7 @@ function TvView(props) {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/tv/${id}?api_key=${keys.API_KEY}`
     );
-    setState(data);
+    setData(data);
   };
 
   const fetchCredits = async () => {
@@ -107,7 +106,7 @@ function TvView(props) {
 
   const fetchCollection = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/collection/${state?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
+      `https://api.themoviedb.org/3/collection/${data?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
     );
     setCollection(data);
   };
@@ -199,10 +198,10 @@ function TvView(props) {
   }, [id]);
 
   useEffect(() => {
-    if (state?.belongs_to_collection) {
+    if (data?.belongs_to_collection) {
       fetchCollection();
     }
-  }, [state]);
+  }, [data]);
 
   const popularCredit = [
     { ...(credits?.cast ? credits?.cast[0] : null) },
@@ -216,10 +215,10 @@ function TvView(props) {
     { ...(credits?.cast ? credits?.cast[8] : null) },
   ];
   const hour = Math.floor(
-    state?.episode_run_time ? state?.episode_run_time[0] / 60 : 0
+    data?.episode_run_time ? data?.episode_run_time[0] / 60 : 0
   );
-  const minute = state?.episode_run_time ? state?.episode_run_time[0] % 60 : 0;
-  let progressNumber = state?.vote_average?.toString();
+  const minute = data?.episode_run_time ? data?.episode_run_time[0] % 60 : 0;
+  let progressNumber = data?.vote_average?.toString();
   let progressArr = progressNumber?.split(".");
   let progressPercent = progressArr?.join("");
 
@@ -233,10 +232,10 @@ function TvView(props) {
 
   return (
     <StyledMovieDetails
-      bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
+      bg={keys.IMG_URL + data?.backdrop_path || data?.poster_path}
       collectionBg={
         collection.parts
-          ? keys.IMG_URL + state?.belongs_to_collection?.poster_path
+          ? keys.IMG_URL + data?.belongs_to_collection?.poster_path
           : null
       }
     >
@@ -246,31 +245,31 @@ function TvView(props) {
             <Image
               width={300}
               height={450}
-              src={`${keys.IMG_URL + state?.poster_path}`}
+              src={`${keys.IMG_URL + data?.poster_path}`}
             />
             <div className="home__block">
               <h2 className="home__title">
-                {state?.original_name}
+                {data?.original_name}
                 <span>
                   (
-                  {state?.first_air_date?.slice(
+                  {data?.first_air_date?.slice(
                     0,
-                    state?.first_air_date?.indexOf("-")
+                    data?.first_air_date?.indexOf("-")
                   )}
                   )
                 </span>
               </h2>
               <div className="home__inner-date">
                 <p className="home__text">
-                  {moment(state?.first_air_date).format("L")}
+                  {moment(data?.first_air_date).format("L")}
                 </p>
-                {state?.production_countries?.map((item) => (
+                {data?.production_countries?.map((item) => (
                   <p className="home__text" key={item?.iso_3166_1}>
                     ({item?.iso_3166_1})
                   </p>
                 ))}
                 <div className="home__inner-link">
-                  {state?.genres?.map((item, index, arr) => (
+                  {data?.genres?.map((item, index, arr) => (
                     <Link key={item.id} to={`/${item?.name.toLowerCase()}`}>
                       {item.name}
                       {arr[arr.length - 1] ? ", " : ""}
@@ -288,20 +287,20 @@ function TvView(props) {
                   status="active"
                   width={68}
                   trailColor={`${
-                    state?.vote_average < 4
+                    data?.vote_average < 4
                       ? "#4F1533"
-                      : state?.vote_average >= 7
+                      : data?.vote_average >= 7
                       ? "#1E4228"
-                      : state?.vote_average < 7
+                      : data?.vote_average < 7
                       ? "#423D0F"
                       : ""
                   }`}
                   strokeColor={`${
-                    state?.vote_average < 4
+                    data?.vote_average < 4
                       ? "#DB2360"
-                      : state?.vote_average >= 7
+                      : data?.vote_average >= 7
                       ? "#21D07A"
-                      : state?.vote_average < 7
+                      : data?.vote_average < 7
                       ? "#D2D531"
                       : ""
                   }`}
@@ -348,10 +347,10 @@ function TvView(props) {
                   </Popover>
                 </div>
               </div>
-              <i>{state?.tagline}</i>
+              <i>{data?.tagline}</i>
               <div className="home__overview">
                 <h3>Overview</h3>
-                <p>{state?.overview}</p>
+                <p>{data?.overview}</p>
               </div>
               <div className="home__jobs">
                 {credits?.crew
@@ -403,7 +402,7 @@ function TvView(props) {
                   View More <BsArrowRight size={25} />
                 </Link>
               </div>
-              <Link className="cast" to={`/tv/${state?.id}/cast`}>
+              <Link className="cast" to={`/tv/${data?.id}/cast`}>
                 Full Cast & Crew
               </Link>
               <div className="media">
@@ -411,12 +410,12 @@ function TvView(props) {
                 <Tabs defaultActiveKey="1">
                   <TabPane tab="Most Popular" key="1">
                     <img
-                      src={keys.IMG_URL + state?.backdrop_path}
-                      alt={state?.title}
+                      src={keys.IMG_URL + data?.backdrop_path}
+                      alt={data?.title}
                     />
                     <img
-                      src={keys.IMG_URL + state?.poster_path}
-                      alt={state?.title}
+                      src={keys.IMG_URL + data?.poster_path}
+                      alt={data?.title}
                     />
                   </TabPane>
                   <TabPane tab={`Videos ${video?.results?.length}`} key="2">
@@ -427,7 +426,7 @@ function TvView(props) {
                             videoId={item?.key}
                             channel={item?.site?.toLowerCase()}
                             id={item?.id}
-                            image={keys.IMG_URL + state?.backdrop_path}
+                            image={keys.IMG_URL + data?.backdrop_path}
                           />
                         </>
                       );
@@ -441,7 +440,7 @@ function TvView(props) {
                       <img
                         key={item?.file_path}
                         src={keys.IMG_URL + item?.file_path}
-                        alt={state?.title}
+                        alt={data?.title}
                       />
                     ))}
                   </TabPane>
@@ -450,22 +449,22 @@ function TvView(props) {
                       <img
                         key={item?.file_path}
                         src={keys.IMG_URL + item?.file_path}
-                        alt={state?.title}
+                        alt={data?.title}
                       />
                     ))}
                   </TabPane>
                 </Tabs>
               </div>
-              {state?.belongs_to_collection ? (
+              {data?.belongs_to_collection ? (
                 <div className="collection">
-                  <h1>Part of the {state?.belongs_to_collection?.name}</h1>
+                  <h1>Part of the {data?.belongs_to_collection?.name}</h1>
                   <p>
                     Includes{" "}
                     {collection?.parts?.map((item) => (
                       <span key={item?.id}>{item?.title}, </span>
                     ))}
                   </p>
-                  <Link to={`/collection/${state?.belongs_to_collection?.id}`}>
+                  <Link to={`/collection/${data?.belongs_to_collection?.id}`}>
                     View Collection
                   </Link>
                 </div>
@@ -558,18 +557,18 @@ function TvView(props) {
                     <AiOutlineTwitter color="white" size={35} />
                   </a>
                 ) : null}
-                {state?.homepage ? (
-                  <a href={state?.homepage} target="_blank">
+                {data?.homepage ? (
+                  <a href={data?.homepage} target="_blank">
                     <BsLink color="white" size={35} />
                   </a>
                 ) : null}
               </div>
               <div className="about">
                 <h3>Status</h3>
-                <p>{state?.status}</p>
+                <p>{data?.status}</p>
                 <h3>Network</h3>
                 <div className="about__logo">
-                  {state?.networks?.map((item) => (
+                  {data?.networks?.map((item) => (
                     <Link key={item?.id} to={`/networks/${item?.id}`}>
                       <img
                         src={keys.IMG_URL + item?.logo_path}
@@ -579,9 +578,9 @@ function TvView(props) {
                   ))}
                 </div>
                 <h3>Type</h3>
-                <p>{state?.type}</p>
+                <p>{data?.type}</p>
                 <h3>Original Language</h3>
-                <p>{state?.original_language?.toUpperCase()}</p>
+                <p>{data?.original_language?.toUpperCase()}</p>
                 <h3>Keywords</h3>
                 <div>
                   {keywords?.results?.map((item) => (

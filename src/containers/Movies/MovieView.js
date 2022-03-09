@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Image, Tabs, Rate, Popover } from "antd";
@@ -27,7 +26,7 @@ import Slider from "react-slick";
 const { TabPane } = Tabs;
 
 function MovieView(props) {
-  const [state, setState] = useState({});
+  const [data, setData] = useState({});
   const [credits, setCredits] = useState({});
   const [image, setImage] = useState({});
   const [video, setVideo] = useState({});
@@ -82,7 +81,7 @@ function MovieView(props) {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${keys.API_KEY}`
     );
-    setState(data);
+    setData(data);
   };
 
   const fetchCredits = async () => {
@@ -107,10 +106,10 @@ function MovieView(props) {
   };
 
   const fetchCollection = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/collection/${state?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
+    const { data: collection } = await axios.get(
+      `https://api.themoviedb.org/3/collection/${data?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
     );
-    setCollection(data);
+    setCollection(collection);
   };
 
   const fetchRecommendations = async () => {
@@ -157,7 +156,7 @@ function MovieView(props) {
   const handleWatchlist = async (watchlist) => {
     const { data } = await axios.post(
       `
-      https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+          https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         media_type: "movie",
         media_id: `${id}`,
@@ -198,10 +197,10 @@ function MovieView(props) {
   }, [id]);
 
   useEffect(() => {
-    if (state?.belongs_to_collection) {
+    if (data?.belongs_to_collection) {
       fetchCollection();
     }
-  }, [state]);
+  }, [data]);
 
   const popularCredit = [
     { ...(credits?.cast ? credits?.cast[0] : null) },
@@ -214,9 +213,9 @@ function MovieView(props) {
     { ...(credits?.cast ? credits?.cast[7] : null) },
     { ...(credits?.cast ? credits?.cast[8] : null) },
   ];
-  const hour = Math.floor(state?.runtime / 60);
-  const minute = state?.runtime % 60;
-  let progressNumber = state?.vote_average?.toString();
+  const hour = Math.floor(data?.runtime / 60);
+  const minute = data?.runtime % 60;
+  let progressNumber = data?.vote_average?.toString();
   let progressArr = progressNumber?.split(".");
   let progressPercent = progressArr?.join("");
 
@@ -230,10 +229,10 @@ function MovieView(props) {
 
   return (
     <StyledMovieDetails
-      bg={keys.IMG_URL + state?.backdrop_path || state?.poster_path}
+      bg={keys.IMG_URL + data?.backdrop_path || data?.poster_path}
       collectionBg={
         collection.parts
-          ? keys.IMG_URL + state?.belongs_to_collection?.poster_path
+          ? keys.IMG_URL + data?.belongs_to_collection?.poster_path
           : null
       }
     >
@@ -244,36 +243,36 @@ function MovieView(props) {
               width={300}
               height={450}
               src={
-                state?.poster_path
-                  ? keys.IMG_URL + state?.poster_path
-                  : state?.backdrop_path
-                  ? keys.IMG_URL + state?.backdrop_path
+                data?.poster_path
+                  ? keys.IMG_URL + data?.poster_path
+                  : data?.backdrop_path
+                  ? keys.IMG_URL + data?.backdrop_path
                   : DefaultImage
               }
             />
             <div className="home__block">
               <h2 className="home__title">
-                {state?.original_title}
+                {data?.original_title}
                 <span>
                   (
-                  {state?.release_date?.slice(
+                  {data?.release_date?.slice(
                     0,
-                    state?.release_date?.indexOf("-")
+                    data?.release_date?.indexOf("-")
                   )}
                   )
                 </span>
               </h2>
               <div className="home__inner-date">
                 <p className="home__text">
-                  {moment(state?.release_date).format("L")}
+                  {moment(data?.release_date).format("L")}
                 </p>
-                {state?.production_countries?.map((item) => (
+                {data?.production_countries?.map((item) => (
                   <p className="home__text" key={item?.iso_3166_1}>
                     ({item?.iso_3166_1})
                   </p>
                 ))}
                 <div className="home__inner-link">
-                  {state?.genres?.map((item, index, arr) => (
+                  {data?.genres?.map((item, index, arr) => (
                     <Link key={item?.id} to={`/${item?.name?.toLowerCase()}`}>
                       {item.name}
                       {arr[arr.length - 1] ? ", " : ""}
@@ -291,20 +290,20 @@ function MovieView(props) {
                   percent={progressPercent}
                   width={68}
                   trailColor={`${
-                    state?.vote_average < 4
+                    data?.vote_average < 4
                       ? "#4F1533"
-                      : state?.vote_average >= 7
+                      : data?.vote_average >= 7
                       ? "#1E4228"
-                      : state?.vote_average < 7
+                      : data?.vote_average < 7
                       ? "#423D0F"
                       : ""
                   }`}
                   strokeColor={`${
-                    state?.vote_average < 4
+                    data?.vote_average < 4
                       ? "#DB2360"
-                      : state?.vote_average >= 7
+                      : data?.vote_average >= 7
                       ? "#21D07A"
-                      : state?.vote_average < 7
+                      : data?.vote_average < 7
                       ? "#D2D531"
                       : ""
                   }`}
@@ -351,10 +350,10 @@ function MovieView(props) {
                   </Popover>
                 </div>
               </div>
-              <i>{state?.tagline}</i>
+              <i>{data?.tagline}</i>
               <div className="home__overview">
                 <h3>Overview</h3>
-                <p>{state?.overview}</p>
+                <p>{data?.overview}</p>
               </div>
               <div className="home__jobs">
                 {credits?.crew
@@ -406,7 +405,7 @@ function MovieView(props) {
                   View More <BsArrowRight size={25} />
                 </Link>
               </div>
-              <Link className="cast" to={`/movie/${state?.id}/cast`}>
+              <Link className="cast" to={`/movie/${data?.id}/cast`}>
                 Full Cast & Crew
               </Link>
               <div className="media">
@@ -414,12 +413,12 @@ function MovieView(props) {
                 <Tabs defaultActiveKey="1">
                   <TabPane tab="Most Popular" key="1">
                     <img
-                      src={keys.IMG_URL + state?.backdrop_path}
-                      alt={state?.title}
+                      src={keys.IMG_URL + data?.backdrop_path}
+                      alt={data?.title}
                     />
                     <img
-                      src={keys.IMG_URL + state?.poster_path}
-                      alt={state?.title}
+                      src={keys.IMG_URL + data?.poster_path}
+                      alt={data?.title}
                     />
                   </TabPane>
                   <TabPane tab={`Videos ${video?.results?.length}`} key="2">
@@ -430,7 +429,7 @@ function MovieView(props) {
                             videoId={item?.key}
                             channel={item?.site?.toLowerCase()}
                             id={item?.id}
-                            image={keys.IMG_URL + state?.backdrop_path}
+                            image={keys.IMG_URL + data?.backdrop_path}
                           />
                         </>
                       );
@@ -444,7 +443,7 @@ function MovieView(props) {
                       <img
                         key={item?.file_path}
                         src={keys.IMG_URL + item?.file_path}
-                        alt={state?.title}
+                        alt={data?.title}
                       />
                     ))}
                   </TabPane>
@@ -453,22 +452,22 @@ function MovieView(props) {
                       <img
                         key={item?.file_path}
                         src={keys.IMG_URL + item?.file_path}
-                        alt={state?.title}
+                        alt={data?.title}
                       />
                     ))}
                   </TabPane>
                 </Tabs>
               </div>
-              {state?.belongs_to_collection ? (
+              {data?.belongs_to_collection ? (
                 <div className="collection">
-                  <h1>Part of the {state?.belongs_to_collection?.name}</h1>
+                  <h1>Part of the {data?.belongs_to_collection?.name}</h1>
                   <p>
                     Includes{" "}
                     {collection?.parts?.map((item) => (
                       <span>{item?.title}, </span>
                     ))}
                   </p>
-                  <Link to={`/collection/${state?.belongs_to_collection?.id}`}>
+                  <Link to={`/collection/${data?.belongs_to_collection?.id}`}>
                     View Collection
                   </Link>
                 </div>
@@ -563,21 +562,21 @@ function MovieView(props) {
                     <AiOutlineTwitter color="white" size={35} />
                   </a>
                 ) : null}
-                {state?.homepage ? (
-                  <a href={state?.homepage} target="_blank">
+                {data?.homepage ? (
+                  <a href={data?.homepage} target="_blank">
                     <BsLink color="white" size={35} />
                   </a>
                 ) : null}
               </div>
               <div className="about">
                 <h3>Status</h3>
-                <p>{state?.status}</p>
+                <p>{data?.status}</p>
                 <h3>Original Language</h3>
-                <p>{state?.original_language?.toUpperCase()}</p>
+                <p>{data?.original_language?.toUpperCase()}</p>
                 <h3>Budget</h3>
-                <p>$ {state?.budget?.toLocaleString("en")}</p>
+                <p>$ {data?.budget?.toLocaleString("en")}</p>
                 <h3>Revenue</h3>
-                <p>$ {state?.revenue?.toLocaleString("en")}</p>
+                <p>$ {data?.revenue?.toLocaleString("en")}</p>
                 <h3>Keywords</h3>
                 <div>
                   {keywords?.keywords?.map((item) => (
