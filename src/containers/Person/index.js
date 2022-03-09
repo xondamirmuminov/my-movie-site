@@ -150,7 +150,11 @@ function Person(props) {
                 )
                 ?.map((item) => (
                   <div className="card" key={item?.id}>
-                    <Link to={`/movie/${item?.id}`}>
+                    <Link
+                      to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                        item?.id
+                      }`}
+                    >
                       <img
                         src={
                           item?.poster_path
@@ -161,7 +165,13 @@ function Person(props) {
                       />
                     </Link>
                     <h3>
-                      <Link to={`/movie/${item?.id}`}>{item?.title}</Link>
+                      <Link
+                        to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                          item?.id
+                        }`}
+                      >
+                        {item?.title}
+                      </Link>
                     </h3>
                   </div>
                 ))}
@@ -170,7 +180,11 @@ function Person(props) {
             <div className="acting">
               {credits?.cast?.map((item) => (
                 <div className="acting-item" key={item?.id}>
-                  <Link to={`/movie/${item?.id}`}>
+                  <Link
+                    to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                      item?.id
+                    }`}
+                  >
                     <img
                       src={
                         item?.poster_path
@@ -184,7 +198,11 @@ function Person(props) {
                     {item?.release_date?.split("-")[0]}
                   </p>
                   <h3>
-                    <Link to={`/movie/${item?.id}`}>
+                    <Link
+                      to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                        item?.id
+                      }`}
+                    >
                       {item?.title ?? item?.name}
                     </Link>
                   </h3>
@@ -199,7 +217,11 @@ function Person(props) {
                 ?.filter((item) => item?.department === "Production")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
-                    <Link to={`/movie/${item?.id}`}>
+                    <Link
+                      to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                        item?.id
+                      }`}
+                    >
                       <img
                         src={
                           item?.poster_path
@@ -213,7 +235,11 @@ function Person(props) {
                       {item?.release_date?.split("-")[0]}
                     </p>
                     <h3>
-                      <Link to={`/movie/${item?.id}`}>
+                      <Link
+                        to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                          item?.id
+                        }`}
+                      >
                         {item?.title ?? item?.name}
                       </Link>
                     </h3>
@@ -228,7 +254,11 @@ function Person(props) {
                 ?.filter((item) => item?.department === "Crew")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
-                    <Link to={`/movie/${item?.id}`}>
+                    <Link
+                      to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                        item?.id
+                      }`}
+                    >
                       <img
                         src={
                           item?.poster_path
@@ -242,7 +272,11 @@ function Person(props) {
                       {item?.release_date?.split("-")[0]}
                     </p>
                     <h3>
-                      <Link to={`/movie/${item?.id}`}>
+                      <Link
+                        to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                          item?.id
+                        }`}
+                      >
                         {item?.title ?? item?.name}
                       </Link>
                     </h3>
@@ -257,7 +291,11 @@ function Person(props) {
                 ?.filter((item) => item?.department === "Directing")
                 ?.map((item) => (
                   <div className="acting-item" key={item?.id}>
-                    <Link to={`/movie/${item?.id}`}>
+                    <Link
+                      to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                        item?.id
+                      }`}
+                    >
                       <img
                         src={
                           item?.poster_path
@@ -271,7 +309,11 @@ function Person(props) {
                       {item?.release_date?.split("-")[0]}
                     </p>
                     <h3>
-                      <Link to={`/movie/${item?.id}`}>
+                      <Link
+                        to={`/${item?.media_type == "tv" ? "tv" : "movie"}/${
+                          item?.id
+                        }`}
+                      >
                         {item?.title ?? item?.name}
                       </Link>
                     </h3>
