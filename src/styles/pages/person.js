@@ -118,6 +118,23 @@ const StyledPerson = styled.section`
       }
     }
   }
+  @media (max-width: 1040px) {
+    .person__block--sm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .person__inner {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  @media (max-width: 420px) {
+    .acting-item {
+      flex-direction: column;
+    }
+  }
 `;
 
 export default StyledPerson;
