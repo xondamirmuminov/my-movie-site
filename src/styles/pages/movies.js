@@ -10,7 +10,7 @@ const StyledMovies = styled.section`
     margin: auto;
     column-gap: 15px;
     padding: 32px;
-    transform: translate(0, -55px);
+    transform: translate(0, -35px);
     display: flex;
     align-items: center;
     justify-content: center;
