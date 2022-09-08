@@ -77,57 +77,55 @@ function TvView(props) {
   };
 
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}?api_key=${keys.API_KEY}`
-    );
+    const { data } = await axios.get(`/tv/${id}?api_key=${keys.API_KEY}`);
     setData(data);
   };
 
   const fetchCredits = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${keys.API_KEY}`
+      `/tv/${id}/credits?api_key=${keys.API_KEY}`
     );
     setCredits(data);
   };
 
   const fetchImages = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/images?api_key=${keys.API_KEY}`
+      `/tv/${id}/images?api_key=${keys.API_KEY}`
     );
     setImage(data);
   };
 
   const fetchVideos = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${keys.API_KEY}`
+      `/tv/${id}/videos?api_key=${keys.API_KEY}`
     );
     setVideo(data);
   };
 
   const fetchCollection = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/collection/${data?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
+      `/collection/${data?.belongs_to_collection?.id}?api_key=${keys.API_KEY}`
     );
     setCollection(data);
   };
 
   const fetchRecommendations = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${keys.API_KEY}`
+      `/tv/${id}/recommendations?api_key=${keys.API_KEY}`
     );
     setRecommendations(data);
   };
 
   const fetchKeywords = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/keywords?api_key=${keys.API_KEY}`
+      `/tv/${id}/keywords?api_key=${keys.API_KEY}`
     );
     setKeywords(data);
   };
 
   const fetchSocial = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/external_ids?api_key=${keys.API_KEY}`
+      `/tv/${id}/external_ids?api_key=${keys.API_KEY}`
     );
     console.log(data);
     setSocial(data);
@@ -135,7 +133,7 @@ function TvView(props) {
 
   const fetchAccount = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
+      `/tv/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
     );
     setAccount(data);
     setFavorite(data?.favorite);
@@ -144,7 +142,7 @@ function TvView(props) {
 
   const handleFavorite = async (favorite) => {
     const { data } = await axios.post(
-      `https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      `/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         media_type: "tv",
         media_id: `${id}`,
@@ -156,7 +154,7 @@ function TvView(props) {
   const handleWatchlist = async (watchlist) => {
     const { data } = await axios.post(
       `
-      https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      /account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         media_type: "tv",
         media_id: `${id}`,
@@ -167,7 +165,7 @@ function TvView(props) {
 
   const handleRate = async (value) => {
     const { data } = await axios.post(
-      `https://api.themoviedb.org/3/tv/${id}/rating?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      `/tv/${id}/rating?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         value: `${value * 2}`,
       }

@@ -15,15 +15,13 @@ function MovieCast(props) {
 
   const fetchData = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${keys.API_KEY}`
+      `/movie/${id}/credits?api_key=${keys.API_KEY}`
     );
     setState((state) => ({ ...state, data }));
   };
 
   const fetchMovie = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${keys.API_KEY}`
-    );
+    const { data } = await axios.get(`/movie/${id}?api_key=${keys.API_KEY}`);
     setState((state) => ({ ...state, movie: data }));
   };
 

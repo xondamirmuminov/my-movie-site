@@ -12,7 +12,7 @@ function Collection(props) {
 
   const fetchData = async () => {
     const { data } = await axios.get(`
-    https://api.themoviedb.org/3/collection/${id}?api_key=${keys.API_KEY}`);
+    /collection/${id}?api_key=${keys.API_KEY}`);
     setData(data);
   };
 

@@ -21,10 +21,10 @@ function People() {
     const { data } = await axios.get(
       `${
         search
-          ? `https://api.themoviedb.org/3/search/person?api_key=${
+          ? `/search/person?api_key=${
               keys.API_KEY
             }&query=${search.toLowerCase()}&page=${page}`
-          : `https://api.themoviedb.org/3/person/popular?api_key=${keys.API_KEY}&page=${page}`
+          : `/person/popular?api_key=${keys.API_KEY}&page=${page}`
       }`
     );
     setData(data);
@@ -39,9 +39,7 @@ function People() {
       fetchData();
     } else {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/person?api_key=${
-          keys.API_KEY
-        }&query=${search.toLowerCase()}`
+        `/search/person?api_key=${keys.API_KEY}&query=${search.toLowerCase()}`
       );
       setData(data);
     }

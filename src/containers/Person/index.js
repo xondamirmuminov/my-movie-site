@@ -19,22 +19,20 @@ function Person(props) {
   const { id } = props.match.params;
 
   const fetchCredit = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/person/${id}?api_key=${keys.API_KEY}`
-    );
+    const { data } = await axios.get(`/person/${id}?api_key=${keys.API_KEY}`);
     setCredit(data);
   };
 
   const fetchSocial = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/person/${id}/external_ids?api_key=${keys.API_KEY}`
+      `/person/${id}/external_ids?api_key=${keys.API_KEY}`
     );
     setSocial(data);
   };
 
   const fetchCredits = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/person/${id}/combined_credits?api_key=${keys.API_KEY}`
+      `/person/${id}/combined_credits?api_key=${keys.API_KEY}`
     );
     setCredits(data);
   };

@@ -61,6 +61,9 @@ function Movies() {
     ],
   };
 
+  const account_id =
+    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI";
+
   const handleTab = (type) => {
     setTabName(type);
   };
@@ -91,14 +94,14 @@ function Movies() {
 
   const fetchFavourites = async () => {
     const { data } = await axios.get(
-      "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/tv?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
+      `/account/${account_id}/favorite/tv?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1`
     );
     setState((state) => ({ ...state, favourite: data?.results }));
   };
 
   const fetchFavouriteMovies = async () => {
     const { data } = await axios.get(
-      "https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite/movies?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1"
+      `/account/${account_id}/favorite/movies?api_key=3b98659947473fae7c2dcfc92c2292ae&session_id=83003c7d76d85eaa3361f7317bfcf79a0f657dd3&language=en-US&&sort_by=created_at.asc&page=1`
     );
     setState((state) => ({ ...state, favouriteMovie: data?.results }));
   };
@@ -118,9 +121,7 @@ function Movies() {
       setData([]);
     } else {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/multi?api_key=${
-          keys.API_KEY
-        }&query=${search.toLowerCase()}`
+        `/search/multi?api_key=${keys.API_KEY}&query=${search.toLowerCase()}`
       );
       setData(data);
     }

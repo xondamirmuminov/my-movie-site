@@ -20,20 +20,20 @@ function Network(props) {
 
   const fetchData = async () => {
     const { data } = await axios.get(`
-    https://api.themoviedb.org/3/network/${id}?api_key=${keys.API_KEY}`);
+    /network/${id}?api_key=${keys.API_KEY}`);
     setData(data);
   };
 
   const fetchMovies = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${keys.API_KEY}&sort_by=network=${id}`
+      `/discover/tv?api_key=${keys.API_KEY}&sort_by=network=${id}`
     );
     setMovies(data);
   };
 
   const changePagination = async (page) => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${keys.API_KEY}&sort_by=network=${id}&page=${page}`
+      `/discover/tv?api_key=${keys.API_KEY}&sort_by=network=${id}&page=${page}`
     );
     setMovies(data);
   };

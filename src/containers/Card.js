@@ -38,7 +38,7 @@ function Card({ img, title, date, progress, id, mediaType }) {
 
   const fetchAccount = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
+      `/movie/${id}/account_states?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`
     );
     setAccount(data);
     setFavorite(data?.favorite);
@@ -47,7 +47,7 @@ function Card({ img, title, date, progress, id, mediaType }) {
 
   const handleFavorite = async (favorite) => {
     const { data } = await axios.post(
-      `https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      `/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/favorite?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         media_type: mediaType,
         media_id: `${id}`,
@@ -60,7 +60,7 @@ function Card({ img, title, date, progress, id, mediaType }) {
   const handleWatchlist = async (watchlist) => {
     const { data } = await axios.post(
       `
-      https://api.themoviedb.org/3/account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      /account/eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzYjk4NjU5OTQ3NDczZmFlN2MyZGNmYzkyYzIyOTJhZSIsInN1YiI6IjYxZGJjOTliYmM4NjU3MDA2Yzc4ZTZiNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.chskjREVlS7KZrIUcb5IBb7IZyG7s5Iik0TWrBlovrI/watchlist?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         media_type: mediaType,
         media_id: `${id}`,
@@ -72,7 +72,7 @@ function Card({ img, title, date, progress, id, mediaType }) {
 
   const handleRate = async (value) => {
     const { data } = await axios.post(
-      `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
+      `/movie/${id}/rating?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}`,
       {
         value: `${value * 2}`,
       }

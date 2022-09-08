@@ -14,22 +14,20 @@ function Keywords(props) {
   const { id } = props.match.params;
 
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/keyword/${id}?api_key=${keys.API_KEY}`
-    );
+    const { data } = await axios.get(`/keyword/${id}?api_key=${keys.API_KEY}`);
     setData(data);
   };
 
   const fetchMovies = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/keyword/${id}/movies?api_key=${keys.API_KEY}`
+      `/keyword/${id}/movies?api_key=${keys.API_KEY}`
     );
     setMovies(data);
   };
 
   const changePagination = async (page) => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/keyword/${id}/movies?api_key=${keys.API_KEY}&page=${page}`
+      `/keyword/${id}/movies?api_key=${keys.API_KEY}&page=${page}`
     );
     setMovies(data);
   };

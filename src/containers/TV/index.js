@@ -21,10 +21,10 @@ function TV() {
     const { data } = await axios.get(
       `${
         search
-          ? `https://api.themoviedb.org/3/search/tv?api_key=${
+          ? `/search/tv?api_key=${
               keys.API_KEY
             }&query=${search.toLowerCase()}&page=${page}`
-          : `https://api.themoviedb.org/3/tv/popular?api_key=${keys.API_KEY}&page=${page}`
+          : `/tv/popular?api_key=${keys.API_KEY}&page=${page}`
       }`
     );
     setData(data);
@@ -39,9 +39,7 @@ function TV() {
       fetchData();
     } else {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/tv?api_key=${
-          keys.API_KEY
-        }&query=${search.toLowerCase()}`
+        `/search/tv?api_key=${keys.API_KEY}&query=${search.toLowerCase()}`
       );
       setData(data);
     }

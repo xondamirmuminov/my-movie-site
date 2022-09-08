@@ -19,35 +19,35 @@ function Profile() {
 
   const fetchData = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/account?api_key=${keys?.API_KEY}&session_id=${keys.SESSION_ID}`
+      `/account?api_key=${keys?.API_KEY}&session_id=${keys.SESSION_ID}`
     );
     setData(data);
   };
 
   const fetchFavorites = async () => {
     const { data } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/favorite/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/favorite/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setFavorites(data);
     const { data: tv } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/favorite/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/favorite/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setFavoriteTv(tv);
   };
 
   const fetchRated = async () => {
     const { data } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/rated/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/rated/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setRatedMovies(data);
     const { data: tv } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/rated/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/rated/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setRatedTv(tv);
   };
 
   const fetchWatchlist = async () => {
     const { data } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/watchlist/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/watchlist/movies?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setWatchlistMovies(data);
     const { data: tv } = await axios.get(`
-    https://api.themoviedb.org/3/account/${keys.ACCOUNT_ID}/watchlist/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
+    /account/${keys.ACCOUNT_ID}/watchlist/tv?api_key=${keys.API_KEY}&session_id=${keys.SESSION_ID}&sort_by=created_at.asc`);
     setWatchlistTv(tv);
   };
 

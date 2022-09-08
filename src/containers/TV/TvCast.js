@@ -15,15 +15,13 @@ function TvCast(props) {
 
   const fetchData = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${keys.API_KEY}`
+      `/tv/${id}/credits?api_key=${keys.API_KEY}`
     );
     setState((state) => ({ ...state, data }));
   };
 
   const fetchMovie = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}?api_key=${keys.API_KEY}`
-    );
+    const { data } = await axios.get(`/tv/${id}?api_key=${keys.API_KEY}`);
     setState((state) => ({ ...state, movie: data }));
   };
 
